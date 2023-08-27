@@ -16,23 +16,33 @@ res.status(200).json({success:true,fetchAllProducts});
 
 //Route of updating a product here --Admin
 exports.updatingAProduct=async(req,res)=>{
-    try {
+  
          //Finding a product through id given in url
     let productFinding=await productSchema.findById(req.params.id);
      if(!productFinding){
        
      return res.status(500).json({"success":false,"message":"Product Not found with that id"});
     }
-    //Id  not found than send false message
-    } catch (error) {
-        console.log(error);
-    }
    
    
+   else{
     //If Id is found than update it with request body values
     productFinding=await productSchema.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true,useFindAndModify:false});
     res.status(200).json({
         success:true,
         productFinding
     })
+}
+}
+
+//Route for deleting a Product
+exports.deleteAProduct=async(req,res)=>{
+    const productTBDeleted=await productSchema.findById(req.params.id);
+    if(!productTBDeleted){
+        return res.status(500).json({success:false,message:"Product not found to be deleted"});
+    }
+    else{
+      await productSchema.findByIdAndDelete(req.params.id);
+      res.status(200).json({success:true,message:"Product deleted Successfully"});
+    }
 }
