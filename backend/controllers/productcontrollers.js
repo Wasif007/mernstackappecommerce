@@ -46,3 +46,14 @@ exports.deleteAProduct=async(req,res)=>{
       res.status(200).json({success:true,message:"Product deleted Successfully"});
     }
 }
+
+//Route for getting A Single Product Details
+exports.findingASProduct=async(req,res)=>{
+    const productTFind=await productSchema.findById(req.params.id);
+    if(!productTFind){
+        return res.status(400).json({success:false,message:"Product not found"});
+    }
+    else{
+      res.status(200).json({success:true,productTFind});
+    }
+}
