@@ -7,6 +7,6 @@ const dotenv=require("dotenv");
 dotenv.config({path:'backend/config/config.env'});
 
 //express function variable used to listen on a port
-app.listen(process.env.PORT,()=>{
-    console.log(`Listening on http://localhost:${process.env.PORT}`);
+app.listen(4000,()=>{
+    console.log(`Listening on http://localhost:4000`);
 })
