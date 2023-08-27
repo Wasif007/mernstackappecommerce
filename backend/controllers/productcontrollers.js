@@ -1,27 +1,31 @@
+const errorHandlingClass = require("../Utils/errorHandling");
 const productSchema=require("../models/productModel");
+//MiddleWare for try Catch for async
+const middleWareForTC=require("../middleware/asyncErrorHandling");
 
 
 //Route to add a new Product acc to Schema --Admin
-exports.addingAProduct=async(req,res)=>{
+exports.addingAProduct=middleWareForTC(async(req,res)=>{
 const productCreatedViaReq=await productSchema.create(req.body);
 res.status(201).json({success:true,productCreatedViaReq});
 }
-
+)
 
 //Route of all products made here
-exports.getAllProducts=async(req,res)=>{
+exports.getAllProducts=middleWareForTC(async(req,res)=>{
    const fetchAllProducts =await productSchema.find();
 res.status(200).json({success:true,fetchAllProducts});
-}
+});
 
 //Route of updating a product here --Admin
-exports.updatingAProduct=async(req,res)=>{
+exports.updatingAProduct=middleWareForTC(async(req,res,next)=>{
   
          //Finding a product through id given in url
     let productFinding=await productSchema.findById(req.params.id);
      if(!productFinding){
        
-     return res.status(500).json({"success":false,"message":"Product Not found with that id"});
+       return next(new errorHandlingClass("Product Not Found",404)); 
+    //  return res.status(500).json({"success":false,"message":"Product Not found with that id"});
     }
    
    
@@ -33,10 +37,10 @@ exports.updatingAProduct=async(req,res)=>{
         productFinding
     })
 }
-}
+});
 
 //Route for deleting a Product
-exports.deleteAProduct=async(req,res)=>{
+exports.deleteAProduct=middleWareForTC(async(req,res)=>{
     const productTBDeleted=await productSchema.findById(req.params.id);
     if(!productTBDeleted){
         return res.status(500).json({success:false,message:"Product not found to be deleted"});
@@ -45,10 +49,10 @@ exports.deleteAProduct=async(req,res)=>{
       await productSchema.findByIdAndDelete(req.params.id);
       res.status(200).json({success:true,message:"Product deleted Successfully"});
     }
-}
+});
 
 //Route for getting A Single Product Details
-exports.findingASProduct=async(req,res)=>{
+exports.findingASProduct=middleWareForTC(async(req,res)=>{
     const productTFind=await productSchema.findById(req.params.id);
     if(!productTFind){
         return res.status(400).json({success:false,message:"Product not found"});
@@ -56,4 +60,4 @@ exports.findingASProduct=async(req,res)=>{
     else{
       res.status(200).json({success:true,productTFind});
     }
-}
+});
