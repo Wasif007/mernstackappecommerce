@@ -4,6 +4,13 @@ const app=require("./app");
 const dotenv=require("dotenv");
 //Importing DataBase
 const database=require("./config/database");
+//UnCaught Exception errors
+process.on("uncaughtException",(error)=>{
+    console.log(`Error is ${error.message}`);
+    console.log("Shutting down Server");
+        process.exit(1);
+   
+})
 
 //Configuring a file
 dotenv.config({path:'backend/config/config.env'});
