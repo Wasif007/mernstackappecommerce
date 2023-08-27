@@ -1,11 +1,4 @@
-import React from 'react'
-
-const productcontrollers = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+//Route of all products made here
+exports.getAllProducts=(req,res)=>{
+res.status(200).json({"success":"Route created of all products"});
 }
-
-export default productcontrollers
