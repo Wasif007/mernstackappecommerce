@@ -14,7 +14,7 @@ res.status(201).json({success:true,productCreatedViaReq});
 //Route of all products made here
 exports.getAllProducts=middleWareForTC(async(req,res)=>{
     //Finding from class where query is all and req.query is keyword
-    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search();
+    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search().filter();
     
     const fetchAllProducts =await apiFiltersConstant.query;
 res.status(200).json({success:true,fetchAllProducts});
