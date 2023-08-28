@@ -2,7 +2,7 @@ const errorHandlingClass = require("../Utils/errorHandling");
 const productSchema=require("../models/productModel");
 //MiddleWare for try Catch for async
 const middleWareForTC=require("../middleware/asyncErrorHandling");
-
+const ApiFeatures = require("../Utils/apifilters");
 
 //Route to add a new Product acc to Schema --Admin
 exports.addingAProduct=middleWareForTC(async(req,res)=>{
@@ -13,7 +13,10 @@ res.status(201).json({success:true,productCreatedViaReq});
 
 //Route of all products made here
 exports.getAllProducts=middleWareForTC(async(req,res)=>{
-   const fetchAllProducts =await productSchema.find();
+    //Finding from class where query is all and req.query is keyword
+    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search();
+    
+    const fetchAllProducts =await apiFiltersConstant.query;
 res.status(200).json({success:true,fetchAllProducts});
 });
 
