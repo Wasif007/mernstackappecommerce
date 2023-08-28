@@ -41,5 +41,16 @@ class ApiFeatures {
         //returning this class
         return this;
     }
+    pagination(numbersOfProducts){
+        //Taking page number from query if not given assume it is 1
+        const pageNumber=Number(this.queryString.page)||1;
+        //We will skip those documents which are not acc to page form numberOfProducts*(pageNumber-1)
+        const skipDocuments=numbersOfProducts*(pageNumber-1);
+        //First finding all than limit of 5 and how many to skip
+        this.query=this.query.limit(numbersOfProducts).skip(skipDocuments);
+        return this;
+
+
+    }
 } 
 module.exports=ApiFeatures 
