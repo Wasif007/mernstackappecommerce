@@ -25,12 +25,19 @@ class ApiFeatures {
         const queryCopy={...this.queryString};
         //Keywords that we dont want while doing filter
         const keywordToRemove=["keyword","page","limit"];
-        console.log(queryCopy);
+        
         //For each loop to delete all query that are not required except category
         keywordToRemove.forEach(key=>delete queryCopy[key]);
-        console.log(queryCopy);
+        
+        //Converting query in string to add $ as mongo search in that
+        let stringCopy=JSON.stringify(queryCopy);
+        //Using regex to replace all with $values
+        stringCopy=stringCopy.replace(/\b(gt|gte|lt|lte)\b/g,(key)=>`$${key}`);
+
+
         //finding it with query.find function
-        this.query=this.query.find(queryCopy);
+        //Reconverting it into JSON data
+        this.query=this.query.find(JSON.parse(stringCopy));
         //returning this class
         return this;
     }
