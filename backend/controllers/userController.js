@@ -18,8 +18,13 @@ exports.userRegister=middleWareForTC(async(req,res,next)=>{
     });
     //Token Created
     const tokenget=userCreated.getJwtTokens();
-    console.log(userCreated);
-    res.status(200).json({
+    const options={
+        httpOnly:true,
+        expires:new Date(
+            Date.now()+604800
+        ),
+    };
+    res.status(200).cookie("token",tokenget,options).json({
         success:true,
         tokenget
     })
@@ -46,11 +51,16 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
     console.log(comparisonPassword);
     //If all goes well create token
       //Token Created
-      const tokenget=findingUserWEmail.getJwtTokens();
-      
-      res.status(200).json({
-          success:true,
-          tokenget
-      })
+    const tokenget=findingUserWEmail.getJwtTokens();
+    const options={
+        httpOnly:true,
+        expires:new Date(
+            Date.now()+604800
+        ),
+    };
+    res.status(200).cookie("token",tokenget,options).json({
+        success:true,
+        tokenget
+    })
 
 });
