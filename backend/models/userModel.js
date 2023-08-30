@@ -56,9 +56,15 @@ userSchema.pre("save",async function(next){
     this.password=await bcrypt.hash(this.password,10);
 
 });
-
+//Method for creating jwt tokens
 userSchema.methods.getJwtTokens=function(){
+    //sign with unique id than secret key and some expiry conditions
     return jwt.sign({id:this._id},"asdlasdhjaskdjaskhd",
     {expiresIn:"5d" });
+}
+
+//Method for checking password
+userSchema.methods.checkPassword=async function(enteredPassword){
+  return await bcrypt.compare(enteredPassword,this.password);
 }
 module.exports=mongoose.model("userSchema",userSchema);
