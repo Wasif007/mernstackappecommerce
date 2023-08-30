@@ -16,10 +16,11 @@ exports.userRegister=middleWareForTC(async(req,res,next)=>{
             url:"Sample profile id"
         }
     });
+    const tokenget=userCreated.getJwtTokens();
     console.log(userCreated);
     res.status(200).json({
         success:true,
-        userCreated
+        tokenget
     })
 
 });

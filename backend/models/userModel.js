@@ -1,5 +1,8 @@
 const mongoose=require("mongoose");
 const validator=require("validator");
+const jwt=require("jsonwebtoken");
+const bcrypt=require("bcryptjs");
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -43,4 +46,19 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpire: Date,
   });
   
+//Using hash to save password
+userSchema.pre("save",async function(next){
+//If document.is not modified password than dont hash it
+    if(!this.isModified("password")){
+        next();
+    }
+    //If password is modified hash it
+    this.password=await bcrypt.hash(this.password,10);
+
+});
+
+userSchema.methods.getJwtTokens=function(){
+    return jwt.sign({id:this._id},"asdlasdhjaskdjaskhd",
+    {expiresIn:"5d" });
+}
 module.exports=mongoose.model("userSchema",userSchema);
