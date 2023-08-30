@@ -48,7 +48,6 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
         return next(new errorHandlingClass("Email or password is incorrect"),401);
 
     }
-    console.log(comparisonPassword);
     //If all goes well create token
       //Token Created
     const tokenget=findingUserWEmail.getJwtTokens();
@@ -58,6 +57,7 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
             Date.now()+604800
         ),
     };
+    //Cookie setting
     res.status(200).cookie("token",tokenget,options).json({
         success:true,
         tokenget
