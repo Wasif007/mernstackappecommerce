@@ -5,6 +5,7 @@ const userSchema=require("../models/userModel");
 //MiddleWare for try Catch for async
 const middleWareForTC=require("../middleware/asyncErrorHandling");
 
+
 //Register a user Function
 exports.userRegister=middleWareForTC(async(req,res,next)=>{
     //Taking name email and password from request body
@@ -16,18 +17,19 @@ exports.userRegister=middleWareForTC(async(req,res,next)=>{
             url:"Sample profile id"
         }
     });
-    //Token Created
-    const tokenget=userCreated.getJwtTokens();
-    const options={
-        httpOnly:true,
-        expires:new Date(
-            Date.now()+604800
-        ),
-    };
-    res.status(200).cookie("token",tokenget,options).json({
-        success:true,
-        tokenget
-    })
+  
+    // //Token Created
+     const tokenget=userCreated.getJwtTokens();
+     const options={
+         httpOnly:true,
+         expires:new Date(
+             Date.now()+604800
+         ),
+     };
+     res.status(200).cookie("token",tokenget,options).json({
+         success:true,
+         tokenget
+     })
 
 });
 //Login a user Function
@@ -48,19 +50,31 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
         return next(new errorHandlingClass("Email or password is incorrect"),401);
 
     }
-    //If all goes well create token
-      //Token Created
-    const tokenget=findingUserWEmail.getJwtTokens();
-    const options={
-        httpOnly:true,
-        expires:new Date(
-            Date.now()+604800
-        ),
-    };
-    //Cookie setting
-    res.status(200).cookie("token",tokenget,options).json({
-        success:true,
-        tokenget
-    })
+    // //If all goes well create token
+       //Token Created
+     const tokenget=findingUserWEmail.getJwtTokens();
+     const options={
+         httpOnly:true,
+         expires:new Date(
+             Date.now()+604800
+         ),
+     };
+     //Cookie setting
+     res.status(200).cookie("token",tokenget,options).json({
+         success:true,
+         tokenget
+     })
 
+});
+//LogOut a User
+exports.loggingOutUser=middleWareForTC(async(req,res,next)=>{
+
+    res.cookie("token",null,{
+        httpOnly:true,
+        expires:new Date(Date.now())
+    })
+    res.status(200).json({
+        success:true,
+        message:"LogOut Successful"
+    })
 });
