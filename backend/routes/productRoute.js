@@ -1,14 +1,15 @@
 const express=require("express");
 //Importing all controllers for products 
 const { getAllProducts, addingAProduct, updatingAProduct, deleteAProduct,findingASProduct} = require("../controllers/productcontrollers");
-const isAuthenticatedUser=require("../middleware/authenticatingUser")
+const isAuthenticatedUser=require("../middleware/authenticatingUser");
+const isRoleDefined = require("../middleware/roleDefinedAuth");
 
 const router=express.Router();
 
 //Making all routes for product CRUD
-router.route("/products").get(isAuthenticatedUser,getAllProducts);
-router.route("/new/product").post(addingAProduct);
-router.route("/product/:id").put(updatingAProduct).delete(deleteAProduct).get(findingASProduct);
+router.route("/products").get(isAuthenticatedUser,isRoleDefined("admin"),getAllProducts);
+router.route("/new/product").post(isAuthenticatedUser,addingAProduct);
+router.route("/product/:id").put(isAuthenticatedUser,updatingAProduct).delete(isAuthenticatedUser,deleteAProduct).get(findingASProduct);
 
 
 module.exports=router
