@@ -64,7 +64,12 @@ const productSchema=new mongoose.Schema({
             required:true
         }
     }
-  ]
+  ],
+  userAdded:{
+    type:mongoose.Schema.ObjectId,
+    ref:"userSchema",
+    required:true
+  }
 
 
 });

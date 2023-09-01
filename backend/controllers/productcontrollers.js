@@ -6,6 +6,9 @@ const ApiFeatures = require("../Utils/apifilters");
 
 //Route to add a new Product acc to Schema --Admin
 exports.addingAProduct=middleWareForTC(async(req,res)=>{
+//Adding a user Id of who is adding it
+req.body.userAdded=req.user.id;
+//Passing all req.body to create new user
 const productCreatedViaReq=await productSchema.create(req.body);
 res.status(201).json({success:true,productCreatedViaReq});
 }
