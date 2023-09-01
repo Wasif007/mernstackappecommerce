@@ -4,6 +4,7 @@ const errorHandlingClass = require("../Utils/errorHandling");
 const userSchema=require("../models/userModel");
 //MiddleWare for try Catch for async
 const middleWareForTC=require("../middleware/asyncErrorHandling");
+const sendEmail = require("../Utils/sendEmail");
 
 
 //Register a user Function
@@ -77,4 +78,40 @@ exports.loggingOutUser=middleWareForTC(async(req,res,next)=>{
         success:true,
         message:"LogOut Successful"
     })
+});
+//Reset user function
+exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
+    //finding user from email found in email
+    const user =await userSchema.findOne({email:req.body.email});
+    //If user not found return it
+    if(!user){
+        return next(new errorHandlingClass("No user Found",404));
+    }
+    //token fetched from user schema function
+    const tokenFetched=user.resetPasswordMethod();
+    //Saving the user so all tokens can be saved
+    await user.save({validateBeforeSave:false});
+    //Email made to be sent   
+    const emailSenturl=`http://localhost/api/v1/${tokenFetched}`;
+    //Message to be sent saved
+    const message=`Email sent to you \n\n ${emailSenturl} \n If you have not sent this Kindly ignore this \n\n `;
+
+    try {
+        await sendEmail({
+            email:user.email,
+            subject:"Ecommerce Reset Password",
+            message
+        });
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email} successfully`,
+        });
+       
+    } catch (error) {
+        user.resetPasswordToken=undefined;
+        user.resetPasswordExpire=undefined;
+        await user.save({validateBeforeSave:false});
+        return next(new errorHandlingClass(error.message,500));
+    }
+
 });

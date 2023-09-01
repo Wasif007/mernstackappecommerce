@@ -11,8 +11,6 @@ process.on("uncaughtException",(error)=>{
    
 })
 
-
-
 database();
 //express function variable used to listen on a port
 const server=app.listen(4000,()=>{
