@@ -50,7 +50,7 @@ exports.updatingAProduct=middleWareForTC(async(req,res,next)=>{
 });
 
 //Route for deleting a Product
-exports.deleteAProduct=middleWareForTC(async(req,res)=>{
+exports.deleteAProduct=middleWareForTC(async(req,res,next)=>{
     const productTBDeleted=await productSchema.findById(req.params.id);
     if(!productTBDeleted){
         return res.status(500).json({success:false,message:"Product not found to be deleted"});
