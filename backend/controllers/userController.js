@@ -155,3 +155,11 @@ userFind.save();
    })
 
 });
+//Getting user details
+exports.userDetailsGetting=middleWareForTC(async(req,res,next)=>{
+const user=await userSchema.findById(req.user.id);
+res.status(200).json({
+    success:true,
+    user
+})
+});

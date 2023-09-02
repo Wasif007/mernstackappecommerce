@@ -1,6 +1,7 @@
 const express=require("express");
 //Importing all controllers for user 
-const { userRegister, userLogin, loggingOutUser, resetUserFunction, resetUserForgotPassword }=require("../controllers/userController")
+const { userRegister, userLogin, loggingOutUser, resetUserFunction, resetUserForgotPassword, userDetailsGetting }=require("../controllers/userController");
+const isAuthenticatedUser = require("../middleware/authenticatingUser");
 
 const router=express.Router();
 
@@ -10,5 +11,6 @@ router.route("/login").post(userLogin);
 router.route("/logout").get(loggingOutUser);
 router.route("/reset/password").post(resetUserFunction);
 router.route("/reset/forgot/:token").put(resetUserForgotPassword);
+router.route("/me").get(isAuthenticatedUser,userDetailsGetting);
 
 module.exports=router
