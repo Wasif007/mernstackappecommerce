@@ -5,6 +5,7 @@ const userSchema=require("../models/userModel");
 //MiddleWare for try Catch for async
 const middleWareForTC=require("../middleware/asyncErrorHandling");
 const sendEmail = require("../Utils/sendEmail");
+const crypto=require("crypto");
 
 
 //Register a user Function
@@ -20,16 +21,16 @@ exports.userRegister=middleWareForTC(async(req,res,next)=>{
     });
   
     // //Token Created
-     const tokenget=userCreated.getJwtTokens();
+     const token=userCreated.getJwtTokens();
      const options={
          httpOnly:true,
          expires:new Date(
              Date.now()+604800
          ),
      };
-     res.status(200).cookie("token",tokenget,options).json({
+     res.status(200).cookie("token",token,options).json({
          success:true,
-         tokenget
+         token
      })
 
 });
@@ -53,7 +54,7 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
     }
     // //If all goes well create token
        //Token Created
-     const tokenget=findingUserWEmail.getJwtTokens();
+     const token=findingUserWEmail.getJwtTokens();
      const options={
          httpOnly:true,
          expires:new Date(
@@ -61,9 +62,9 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
          ),
      };
      //Cookie setting
-     res.status(200).cookie("token",tokenget,options).json({
+     res.status(200).cookie("token",token,options).json({
          success:true,
-         tokenget
+         token
      })
 
 });
@@ -88,11 +89,11 @@ exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
         return next(new errorHandlingClass("No user Found",404));
     }
     //token fetched from user schema function
-    const tokenFetched=user.resetPasswordMethod();
+    const token=user.resetPasswordMethod();
     //Saving the user so all tokens can be saved
     await user.save({validateBeforeSave:false});
     //Email made to be sent   
-    const emailSenturl=`http://localhost/api/v1/${tokenFetched}`;
+    const emailSenturl=`http://localhost:4000/api/v1/reset/forgot/${token}`;
     //Message to be sent saved
     const message=`Email sent to you \n\n ${emailSenturl} \n If you have not sent this Kindly ignore this \n\n `;
 
@@ -113,5 +114,44 @@ exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
         await user.save({validateBeforeSave:false});
         return next(new errorHandlingClass(error.message,500));
     }
+
+});
+//Forgot password route
+exports.resetUserForgotPassword=middleWareForTC(async(req,res,next)=>{
+    //Getting password for req.params and setting it via sha256 algo
+ const resetPasswordToken=crypto.createHash('sha256').update(req.params.token).digest("hex");
+ console.log(resetPasswordToken);
+ //Finding the required user
+ const userFind=await userSchema.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+})
+//If user not found
+if(!userFind){
+    return next(new errorHandlingClass("No user Found",404));
+}
+//If user added both password wrong
+if(req.body.password!==req.body.confirmPassword){
+    return next(new errorHandlingClass("Password and Confirm Password doesnot matches",404));
+}
+//If all goes well save password into user.password
+userFind.password=req.body.password;
+userFind.resetPasswordToken=undefined;
+userFind.resetPasswordExpire=undefined;
+//Save the user
+userFind.save();
+   //Token Created
+   const token=userFind.getJwtTokens();
+   const options={
+       httpOnly:true,
+       expires:new Date(
+           Date.now()+604800
+       ),
+   };
+   //Cookie setting
+   res.status(200).cookie("token",token,options).json({
+       success:true,
+       token
+   })
 
 });

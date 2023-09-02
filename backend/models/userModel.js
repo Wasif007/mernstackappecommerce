@@ -73,9 +73,10 @@ userSchema.methods.resetPasswordMethod=function(){
   //Creating token of random bytes and converted it into hex
   const token=crypto.randomBytes(20).toString("hex");
   //Setting reset Password on sha256 algo and updating token according to it and converting it into hex
-  this.resetPasswordMethod=crypto.createHash('sha256').update(token).digest("hex");
+  this.resetPasswordToken=crypto.createHash('sha256').update(token).digest("hex");
+  console.log("hello  "+this.resetPasswordToken);
   //Setting reset password expiry to 15 min 
-  this.resetPasswordExpire=Date.now()+15*60*1000;
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
   return token;
 }
