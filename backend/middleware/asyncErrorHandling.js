@@ -1,3 +1,3 @@
-module.exports=tryCatchFunction=>(req,res,next)=>{
-    Promise.resolve(tryCatchFunction(req,res,next)).catch(next);
+module.exports=(theFunc)=>(req,res,next)=>{
+    Promise.resolve(theFunc(req, res, next)).catch(next);
 }
