@@ -261,8 +261,48 @@ exports.gettingOneUserFAdmin=middleWareForTC(async(req,res,next)=>{
             success:false,
             message:error.message
         })
-    }
-    
-
-   
+    }   
 })
+//Updating user role via admin permission
+exports.userRoleDetail=middleWareForTC(async(req,res,next)=>{
+
+    const details={
+     name:req.body.name,
+     email:req.body.email,
+     role:req.body.role
+    }
+       const findingUser=await userSchema.findByIdAndUpdate(req.params.id,details,{
+         runValidators:true,
+         new:true,
+         userFindAndModify:false
+       })
+       if(!findingUser){
+        return res.status(400).json({
+            success:false,
+            message:`No User with Id:${req.params.id} Found`
+        })
+       }
+       findingUser.save();
+ 
+     res.status(200).json({
+         success:true,
+         findingUser
+     })
+ });
+ //Deleting a user with admin permission
+ exports.userDetailDeleFAdmin=middleWareForTC(async(req,res,next)=>{
+
+       const findingUser=await userSchema.findById(req.params.id)
+       if(!findingUser){
+        return res.status(400).json({
+            success:false,
+            message:`No User with Id:${req.params.id} Found`
+        })
+       }
+      await findingUser.deleteOne({id:req.params.id});
+ 
+     res.status(200).json({
+         success:true,
+         message:`Deleted User with Id: ${req.params.id}`
+     })
+ });
