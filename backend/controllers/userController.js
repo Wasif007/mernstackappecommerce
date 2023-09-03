@@ -163,3 +163,27 @@ res.status(200).json({
     user
 })
 });
+//Updating  Password of a user route
+exports.userPasswordUpdate=middleWareForTC(async(req,res,next)=>{
+
+    const user=await userSchema.findById(req.user.id).select("+password");
+
+      //Checking password from user model function
+      const comparisonPassword=await user.checkPassword(req.body.oldPassword);
+      if(!comparisonPassword){
+          return next(new errorHandlingClass("Password is incorrect"),401);
+  
+      }
+      if(req.body.newPassword!==req.body.confirmPassword)
+      {
+        return next(new errorHandlingClass("Confirm and Old Password doesnot matches"),401);
+
+      }
+      user.password=req.body.newPassword;
+      user.save();
+
+    res.status(200).json({
+        success:true,
+        user
+    })
+});
