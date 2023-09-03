@@ -33,10 +33,11 @@ exports.updatingAProduct=middleWareForTC(async(req,res,next)=>{
          //Finding a product through id given in url
     let productFinding=await productSchema.findById(req.params.id);
      if(!productFinding){
-       
-       return next(new errorHandlingClass("Product Not Found",404)); 
-    //  return res.status(500).json({"success":false,"message":"Product Not found with that id"});
-    }
+        return res.status(404).json({
+            success:false,
+            message:"Product not found"
+        })
+        }
    
    
    else{
@@ -65,7 +66,11 @@ exports.deleteAProduct=middleWareForTC(async(req,res,next)=>{
 exports.findingASProduct=middleWareForTC(async(req,res)=>{
     const productTFind=await productSchema.findById(req.params.id);
     if(!productTFind){
-        return res.status(400).json({success:false,message:"Product not found"});
+       return res.status(400).json({
+            success:false,
+            message:"Product not found"
+        })
+       
     }
     else{
       res.status(200).json({success:true,productTFind});

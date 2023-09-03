@@ -39,18 +39,27 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
     const {email,password}=req.body;
     //Checking if email and password is provided or not
     if(!email || !password){
-        return next(new errorHandlingClass("Please provide email or password",404));
+        return res.status(404).json({
+            success:false,
+            message:"Please provide email or password"
+        })
     }
     //Finding user with email basis
     const findingUserWEmail=await userSchema.findOne({email}).select("+password");
     if(!findingUserWEmail){
-        return next(new errorHandlingClass("Email or password is incorrect"),401);
+        return res.status(401).json({
+            success:false,
+            message:"Email or Password is Incorrect"
+        })
+        
     }
     //Checking password from user model function
     const comparisonPassword=await findingUserWEmail.checkPassword(password);
     if(!comparisonPassword){
-        return next(new errorHandlingClass("Email or password is incorrect"),401);
-
+        return res.status(401).json({
+            success:false,
+            message:"Email or Password is Incorrect"
+        })
     }
     // //If all goes well create token
        //Token Created
@@ -86,7 +95,10 @@ exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
     const user =await userSchema.findOne({email:req.body.email});
     //If user not found return it
     if(!user){
-        return next(new errorHandlingClass("No user Found",404));
+        return res.status(404).json({
+            success:false,
+            message:"No User Found in Database"
+        })
     }
     //token fetched from user schema function
     const token=user.resetPasswordMethod();
@@ -112,7 +124,10 @@ exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
         user.resetPasswordToken=undefined;
         user.resetPasswordExpire=undefined;
         await user.save({validateBeforeSave:false});
-        return next(new errorHandlingClass(error.message,500));
+        return   res.status(500).json({
+            success:false,
+            message:error.message
+        });
     }
 
 });
@@ -128,11 +143,17 @@ exports.resetUserForgotPassword=middleWareForTC(async(req,res,next)=>{
 })
 //If user not found
 if(!userFind){
-    return next(new errorHandlingClass("No user Found",404));
+    return res.status(404).json({
+        success:false,
+        message:"No User Found in Database"
+    })
 }
 //If user added both password wrong
 if(req.body.password!==req.body.confirmPassword){
-    return next(new errorHandlingClass("Password and Confirm Password doesnot matches",404));
+    return res.status(401).json({
+        success:false,
+        message:"New Password and Confirm Password doesnot matches"
+    })
 }
 //If all goes well save password into user.password
 userFind.password=req.body.password;
@@ -171,13 +192,19 @@ exports.userPasswordUpdate=middleWareForTC(async(req,res,next)=>{
       //Checking password from user model function
       const comparisonPassword=await user.checkPassword(req.body.oldPassword);
       if(!comparisonPassword){
-          return next(new errorHandlingClass("Password is incorrect"),401);
-  
+        return res.status(401).json({
+            success:false,
+            message:"Password is Incorrect"
+        })
+         
       }
       if(req.body.newPassword!==req.body.confirmPassword)
       {
-        return next(new errorHandlingClass("Confirm and Old Password doesnot matches"),401);
-
+        return res.status(401).json({
+            success:false,
+            message:"Confirm and Old Password doesnot matches"
+        })
+       
       }
       user.password=req.body.newPassword;
       user.save();

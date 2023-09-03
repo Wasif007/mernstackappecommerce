@@ -6,7 +6,10 @@ const User = require("../models/userModel");
 const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
  const {token}=req.cookies;
  if(!token){
-    return next(new ErrorHander("You are Logout, Please Login to access data",401));
+  return res.status(401).json({
+      success:false,
+      message:"You are Logout, Please Login to access data"
+  })
  }
  const decodeData=jwt.verify(token,"asdlasdhjaskdjaskhd");
  req.user=await User.findById(decodeData.id);
