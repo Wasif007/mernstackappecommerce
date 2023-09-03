@@ -1,8 +1,8 @@
 const express=require("express");
 //Importing all controllers for user 
-const { userRegister, userLogin, loggingOutUser, resetUserFunction, resetUserForgotPassword, userDetailsGetting, userPasswordUpdate, userProfileUpdate }=require("../controllers/userController");
+const { userRegister, userLogin, loggingOutUser, resetUserFunction, resetUserForgotPassword, userDetailsGetting, userPasswordUpdate, userProfileUpdate, gettingAllUsersFAdmin, gettingOneUserFAdmin }=require("../controllers/userController");
 const isAuthenticatedUser = require("../middleware/authenticatingUser");
-
+const isRoleDefined = require("../middleware/roleDefinedAuth");
 const router=express.Router();
 
 //Making all routes for product CRUD
@@ -14,5 +14,7 @@ router.route("/reset/forgot/:token").put(resetUserForgotPassword);
 router.route("/me").get(isAuthenticatedUser,userDetailsGetting);
 router.route("/password/update").put(isAuthenticatedUser,userPasswordUpdate);
 router.route("/me/update").put(isAuthenticatedUser,userProfileUpdate);
+router.route("/admin/allusers").get(isAuthenticatedUser,isRoleDefined("admin"),gettingAllUsersFAdmin);
+router.route("/admin/specificuser/:id").get(isAuthenticatedUser,isRoleDefined("admin"),gettingOneUserFAdmin);
 
 module.exports=router

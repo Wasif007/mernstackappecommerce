@@ -233,3 +233,36 @@ exports.userProfileUpdate=middleWareForTC(async(req,res,next)=>{
         findingUser
     })
 });
+//Getting all users admin
+exports.gettingAllUsersFAdmin=middleWareForTC(async(req,res,next)=>{
+    const users=await userSchema.find();
+
+    res.status(200).json({
+        success:true,
+        users
+    });
+})
+// getting specific user for admin via id
+exports.gettingOneUserFAdmin=middleWareForTC(async(req,res,next)=>{
+    try {
+        const user=await userSchema.findById(req.params.id);
+    if(!user){
+        return res.status(400).json({
+            success:false,
+            message:"No user found with specified Id"
+        })
+    }
+     res.status(200).json({
+        success:true,
+        user
+    });
+    } catch (error) {
+        return res.status(400).json({
+            success:false,
+            message:error.message
+        })
+    }
+    
+
+   
+})
