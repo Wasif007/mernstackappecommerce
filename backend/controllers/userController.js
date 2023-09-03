@@ -187,3 +187,22 @@ exports.userPasswordUpdate=middleWareForTC(async(req,res,next)=>{
         user
     })
 });
+//Updating user details route
+exports.userProfileUpdate=middleWareForTC(async(req,res,next)=>{
+
+   const details={
+    name:req.body.name,
+    email:req.body.email
+   }
+      const findingUser=await userSchema.findByIdAndUpdate(req.user.id,details,{
+        runValidators:true,
+        new:true,
+        userFindAndModify:false
+      })
+      findingUser.save();
+
+    res.status(200).json({
+        success:true,
+        findingUser
+    })
+});
