@@ -76,3 +76,46 @@ exports.findingASProduct=middleWareForTC(async(req,res)=>{
       res.status(200).json({success:true,productTFind});
     }
 });
+//Route to make reviews and ratings update
+exports.reviewsAndRatingFunc=middleWareForTC(async(req,res,next)=>{
+    //destructring all from req.body
+const {review,rating,productId}=req.body;
+//Making object of required documents
+const reviewUpdate={
+    userAdded:req.user._id,
+    name:req.user.name,
+    review,
+    rating
+}
+//Finding the required product from product Id
+const productFinding=await productSchema.findById(productId);
+//Checking if it is reviewed before or not
+const isReviewed=productFinding.reviews.find(rev=>rev.userAdded.toString()===req.user._id.toString());
+
+//If it is reviewed
+if(isReviewed){
+productFinding.reviews.forEach(rev=>{
+    if(rev.userAdded.toString()===req.user._id.toString()){
+    rev.rating=rating;
+    rev.review=Number(review);
+    }
+   
+})
+}
+//If not reviewed
+else{
+productFinding.reviews.push(reviewUpdate);
+productFinding.numOfReviews=productFinding.reviews.length;
+}
+//Finding the avg for ratings of a product
+let avg=0;
+productFinding.reviews.forEach(rev=>{
+    avg+=rev.rating
+});
+productFinding.ratings=avg/productFinding.reviews.length;
+productFinding.save({validateBeforeSave:false});
+res.status(200).json({
+    success:true,
+    productFinding
+})
+});

@@ -15,7 +15,7 @@ const productSchema=new mongoose.Schema({
     default:0,
     maxLenght:[7,"Price cannot exceeds 7 digits"]
   },
-  rating:{
+  ratings:{
     type:Number,
     default:0
   },
@@ -51,6 +51,11 @@ const productSchema=new mongoose.Schema({
   },
   reviews:[
     {
+      userAdded:{
+        type:mongoose.Schema.ObjectId,
+        ref:"userSchema",
+        required:true
+      },
         name:{
             type:String,
             required:true
