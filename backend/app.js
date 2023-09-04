@@ -13,12 +13,14 @@ const errorHandlingMiddlewares=require("./middleware/errorhandlingmiddleware")
 //Importing routes here
 const productsAll=require("./routes/productRoute");
 const userAll=require("./routes/userRoute");
+const orderAll=require("./routes/orderRoute");
 
 app.use(errorHandlingMiddlewares);
 
 //Using routes here
 app.use("/api/v1",productsAll);
 app.use("/api/v1",userAll);
+app.use("/api/v1",orderAll);
 
 
 
