@@ -112,10 +112,27 @@ let avg=0;
 productFinding.reviews.forEach(rev=>{
     avg+=rev.rating
 });
+//Finding the avg and setting it to ratings
 productFinding.ratings=avg/productFinding.reviews.length;
+//Saving  the product after changes
 productFinding.save({validateBeforeSave:false});
 res.status(200).json({
     success:true,
     productFinding
+})
+});
+//Getting all reviews from a single product
+exports.fetchingAllReviews=middleWareForTC(async(req,res,next)=>{
+    
+ const product=await productSchema.findById(req.query.id);
+ if(!product){
+     return res.status(400).json({
+         success:false,
+         message:"Product not found"
+     })
+ }
+res.status(200).json({
+    success:true,
+    review:product.reviews
 })
 });
