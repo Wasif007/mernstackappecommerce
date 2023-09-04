@@ -33,7 +33,7 @@ exports.newOrderCreating=middleWareForTC(async(req,res,next)=>{
         orderCreated
       })
 });
-//Getting my orders detail
+//Getting All  order detail of logged in user
 exports.gettingSingleOrder=middleWareForTC(async(req,res,next)=>{
 const orderDetails=await orderSchema.find({userAdded:req.user._id});
 res.status(200).json({
@@ -41,3 +41,32 @@ res.status(200).json({
     orderDetails
 })
 });
+
+//Getting Single order details 
+exports.gettingOrderDetails=middleWareForTC(async(req,res,next)=>{
+    const orderDetails=await orderSchema.findById(req.params.id).populate('userAdded','name email');
+    if(!orderDetails){
+        return res.status(400).json({
+            success:false,
+            message:"No order found in Database"
+        })
+    }
+    res.status(200).json({
+        success:true,
+        orderDetails
+    })
+    });
+
+    //Getting All  order detail for Admin
+exports.gettingAllOrdersAdmin=middleWareForTC(async(req,res,next)=>{
+    const orderDetails=await orderSchema.find();
+    let totalAmount=0;
+    orderDetails.forEach((order)=>{
+        totalAmount+=order.totalPrice;
+    })
+    res.status(200).json({
+        success:true,
+        orderDetails,
+        totalAmount
+    })
+    });
