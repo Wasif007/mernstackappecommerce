@@ -33,3 +33,11 @@ exports.newOrderCreating=middleWareForTC(async(req,res,next)=>{
         orderCreated
       })
 });
+//Getting my orders detail
+exports.gettingSingleOrder=middleWareForTC(async(req,res,next)=>{
+const orderDetails=await orderSchema.find({userAdded:req.user._id});
+res.status(200).json({
+    success:true,
+    orderDetails
+})
+});
