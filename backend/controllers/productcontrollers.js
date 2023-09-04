@@ -136,3 +136,39 @@ res.status(200).json({
     review:product.reviews
 })
 });
+//Deleting a review of a product route
+exports.deletingAReview=middleWareForTC(async(req,res,next)=>{
+    
+    const product=await productSchema.findById(req.query.productId);
+    
+    if(!product){
+        return res.status(400).json({
+            success:false,
+            message:"Product not found"
+        })
+    }
+    console.log(product.reviews);
+    const reviews=product.reviews.filter((rev)=>rev._id.toString()!==req.query.id.toString());
+    const numOfReviews=reviews.length;
+    //Finding the avg for ratings of a product
+let avg=0;
+reviews.forEach(rev=>{
+    avg+=rev.rating
+});
+//Finding the avg and setting it to ratings
+const ratings=avg/reviews.length;
+await productSchema.findByIdAndUpdate(req.query.productId,{
+    reviews,
+    ratings,
+    numOfReviews
+},{
+    new:true,
+    runValidators:true,
+    userFindAndModify:false
+})
+
+   res.status(200).json({
+       success:true,
+       review:reviews
+   })
+   });
