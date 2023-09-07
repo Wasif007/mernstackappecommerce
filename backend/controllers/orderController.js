@@ -70,3 +70,65 @@ exports.gettingAllOrdersAdmin=middleWareForTC(async(req,res,next)=>{
         totalAmount
     })
     });
+    //Update an order status
+    exports.updateOrderFAdmin=middleWareForTC(async(req,res,next)=>{
+        //First finding an order
+        const order=await orderSchema.findById(req.params.id);
+        //If no order found send status of 400 
+        if(!order){
+            return res.status(400).json({
+                success:false,
+                message:"No order found of provided Id"
+            })
+        }
+        //If order status is delievered we dont need to do anything
+        if(order.orderStatus==="Delivered"){
+                return res.status(401).json({
+                    success:false,
+                    message:"Order has been already Delivered"
+                })
+        }
+        //Loop through orderItems details and update stock of products
+        order.orderItems.forEach(async (order)=>{
+            await updateStockFunc(order.product,order.quantity)
+        });
+        //Update order status acc to sent in req.body
+        order.orderStatus=req.body.status;
+        if(req.body.status==="Delivered"){
+            order.createdAt=Date.now();
+        }
+        //save order status and stock
+        await order.save({validateBeforeSave:false});
+        res.status(200).json({
+            success:true,
+            message:"Order Status Updated Successfully"
+        })
+        
+    });
+//Order stock update function
+    async function updateStockFunc(productId,quantityOfProducts){
+const productFinding=await productSchema.findById(productId);
+productFinding.Stock=productFinding.Stock-quantityOfProducts;
+await productFinding.save({validateBeforeSave:false});
+
+    }
+      //Delete an order for admin
+exports.deleteOrderFAdmin=middleWareForTC(async(req,res,next)=>{
+
+    //Find an order of id provided
+   const order= await orderSchema.findById(req.params.id);
+   console.log(order);
+   if(!order){
+    //If no order found
+    return res.status(400).json({
+        success:false,
+        message:"No order found of provided Id"
+    })
+   }
+   //If order is there delete its collection
+   await orderSchema.deleteOne(order._id);
+    res.status(200).json({
+        success:true
+       
+    })
+    });
