@@ -6,14 +6,11 @@ import MetaData from "../layout/MetaData";
 import {useSelector,useDispatch} from "react-redux"
 import {getAdminProduct} from "../../actions/productAction"
 
-const product={
-  name:"Wasif",
-  price:50,
-  image:[{url:"https://i.ibb.co/DRST11n/1.webp"}],
-  _id:"wasifAteeq"
-}
+
 const Home = () => {
   const dispatch=useDispatch();
+   const {products,error,loading,productCount}=useSelector(state=>state.product);
+   
   useEffect(() => {
     dispatch(getAdminProduct());
   }, [dispatch]);
@@ -35,14 +32,13 @@ const Home = () => {
             <h2 className="homeHeading">Featured Products</h2>
   
             <div className="container" id="container">
-              <Product product={product}/>
-              <Product product={product}/>
-              <Product product={product}/>
-              <Product product={product}/>
-              <Product product={product}/>
-              <Product product={product}/>
-              <Product product={product}/>
-              <Product product={product}/>
+             
+              {/* <Product product={product}/> */}
+              {products && products.map((product)=>
+              <Product product={product} key={product._id}/>
+              )}
+             
+              
             </div>
          
       
