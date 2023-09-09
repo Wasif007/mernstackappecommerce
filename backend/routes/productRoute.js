@@ -7,7 +7,7 @@ const isRoleDefined = require("../middleware/roleDefinedAuth");
 const router=express.Router();
 
 //Making all routes for product CRUD
-router.route("/admin/products").get(isAuthenticatedUser,isRoleDefined("admin"),getAllProducts);
+router.route("/admin/products").get(getAllProducts);
 router.route("/admin/new/product").post(isAuthenticatedUser,isRoleDefined("admin"),addingAProduct);
 router.route("/admin/product/:id").put(isAuthenticatedUser,isRoleDefined("admin"),updatingAProduct).delete(isAuthenticatedUser,isRoleDefined("admin"),deleteAProduct);
 router.route("/product/:id").get(findingASProduct)
