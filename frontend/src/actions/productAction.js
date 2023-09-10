@@ -31,7 +31,7 @@ export const getSingleProductAdmin = (id) => async (dispatch) => {
     dispatch({ type: ONE_PRODUCT_REQUEST });
 
     const { data } = await axios.get(`/api/v1/product/${id}`);
-
+    
     dispatch({
       type: ONE_PRODUCT_SUCCESS,
       payload: data,

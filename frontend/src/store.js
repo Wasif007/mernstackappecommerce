@@ -5,7 +5,7 @@ import { oneProductReducer, productReducer } from "./reducers/productReducer";
 
 const reduce=combineReducers({
     product:productReducer,
-    oneProduct:oneProductReducer,
+    productDetails:oneProductReducer,
 });
 const initialState={};
 const middleWare=[thunk];

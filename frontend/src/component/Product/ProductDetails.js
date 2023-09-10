@@ -1,21 +1,28 @@
 import React, { Fragment, useEffect } from 'react'
-import {CgCarousel} from "react-material-ui-carousel"
+import Carousel, {CgCarousel} from "react-material-ui-carousel"
 import { useDispatch,useSelector } from 'react-redux'
 import { getSingleProductAdmin } from '../../actions/productAction'
+import {useParams} from "react-router-dom"
+
+
 const ProductDetails = () => {
+    let {id}=useParams();
+    console.log(id);
     const dispatch=useDispatch();
     useEffect(() => {
-        dispatch(getSingleProductAdmin());
-      }, [dispatch]);
-      const {product,error,loading,productCount}=useSelector(state=>state.ProductDetails);
-
+        dispatch(getSingleProductAdmin(id));
+      }, [dispatch,id]);
+      const {productDetails,error,loading,productCount}=useSelector(state=>state.productDetails);
+      console.log(productDetails);
   return (
-    <Fragment>
+    
+    <>
+      <Fragment>
        <div className='ProductDetails'>
        <div>
-            <CgCarousel>
-        {
-            product.images && product.images.map((img,i)=>(
+            <Carousel>
+         {
+            productDetails.images && productDetails.images.map((img,i)=>(
                 <img className='CarouselImage'
                 key={img.url}
                 src={img.url}
@@ -24,11 +31,12 @@ const ProductDetails = () => {
                 
                 
             ))
-        }
-            </CgCarousel>
+        } 
+            </Carousel>
         </div>
        </div>
-    </Fragment>
+    </Fragment>  
+    </>
   )
 }
 
