@@ -5,6 +5,7 @@ import Product from "./Product.js"
 import MetaData from "../layout/MetaData";
 import {useSelector,useDispatch} from "react-redux"
 import {getAdminProduct} from "../../actions/productAction"
+import Loader from "../layout/Loader/Loading";
 
 
 const Home = () => {
@@ -15,7 +16,10 @@ const Home = () => {
     dispatch(getAdminProduct());
   }, [dispatch]);
     return (
-      <Fragment>
+     <Fragment>
+      {
+        loading?
+        <Loader/>: <Fragment>
         
         <MetaData title="Ecommerce Website"/>
             <div className="banner">
@@ -43,6 +47,8 @@ const Home = () => {
          
       
       </Fragment>
+      }
+     </Fragment>
     );
 }
 
