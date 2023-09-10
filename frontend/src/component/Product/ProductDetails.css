@@ -156,7 +156,7 @@
     padding: 1rem;
     font: 300 1rem "Roboto";
   }
-  
+ 
   .reviewsHeading {
     color: #000000be;
     font: 500 1.4vmax "Roboto";
@@ -200,7 +200,7 @@
     font: 400 1.3vmax "Gill Sans";
     text-align: center;
     color: rgba(0, 0, 0, 0.548);
-  }
+  } 
   
   @media screen and (max-width: 600px) {
     .ProductDetails {
