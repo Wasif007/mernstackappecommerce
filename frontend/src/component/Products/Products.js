@@ -4,12 +4,15 @@ import { getAdminProduct } from '../../actions/productAction'
 import Loader from '../layout/Loader/Loading'
 import Product from '../Home/Product'
 import "./Products.css"
+import { useParams } from 'react-router-dom'
 
 const Products = () => {
+    let keywordFromParam=useParams();
+    console.log(keywordFromParam);
     const dispatch=useDispatch();
     useEffect(() => {
-        dispatch(getAdminProduct());
-      }, [dispatch]);
+        dispatch(getAdminProduct(keywordFromParam.keyword));
+      }, [dispatch,keywordFromParam]);
       const {products,loading,productCount}=useSelector(state=>state.product);
   return (
    <Fragment>
