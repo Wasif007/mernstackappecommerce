@@ -2,11 +2,11 @@ import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL
 import axios from "axios";
 
 // Get All Products For Admin
-export const getAdminProduct = () => async (dispatch) => {
+export const getAdminProduct = (keywordFromParam="") => async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
   
-      const { data } = await axios.get("/api/v1/admin/products");
+      const { data } = await axios.get(`/api/v1/admin/products?keyword=${keywordFromParam}`);
   
       dispatch({
         type: ALL_PRODUCT_SUCCESS,
