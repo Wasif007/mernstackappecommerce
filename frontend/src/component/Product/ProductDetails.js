@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom"
  import "./ProductDetails.css";
 import Loader from '../layout/Loader/Loading';
 import Review from '../layout/Review/review';
+import ReactStars from 'react-rating-stars-component'
 
 
 
@@ -22,6 +23,10 @@ const ProductDetails = () => {
         value: productDetails.ratings,
         readOnly: true,
         precision: 0.5,
+        edit:false,
+        color:"rgba(20,20,20,0.1)",
+        activeColor:"tomato",
+        isHalf:true
       };
   return (
     <Fragment>
@@ -52,6 +57,7 @@ const ProductDetails = () => {
                    <div className="detailsBlock-2">
                      <span className="detailsBlock-2-span">
                        {" "}
+                       <ReactStars {...options}/>
                        ({productDetails.numOfReviews} Reviews)
                      </span>
                    </div>
