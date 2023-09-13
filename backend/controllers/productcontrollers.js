@@ -17,14 +17,24 @@ res.status(201).json({success:true,productCreatedViaReq});
 //Route of all products made here
 exports.getAllProducts=middleWareForTC(async(req,res)=>{
     //How many Products to be shown on one page
-    const numberOfProducts=12;
+    const numberOfProducts=4;
     //Keeping the count of products to be shown on front end
     const numOfProducts=await productSchema.countDocuments();
     //Finding from class where query is all and req.query is keyword
-    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search().filter().pagination(numberOfProducts);
+    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search().filter();
+
+    let fetchAllProducts = await apiFiltersConstant.query;
+    console.log(fetchAllProducts.length)
+    let filteredProductsCount = fetchAllProducts.length;
+  
+    apiFiltersConstant.pagination(numberOfProducts);
+  
+    fetchAllProducts = await apiFiltersConstant.query;
+
+   
+
     
-    const fetchAllProducts =await apiFiltersConstant.query;
-res.status(200).json({success:true,fetchAllProducts,numOfProducts,numberOfProducts});
+res.status(200).json({success:true,fetchAllProducts,numOfProducts,numberOfProducts,filteredProductsCount});
 });
 
 //Route of updating a product here --Admin
