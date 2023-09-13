@@ -8,7 +8,8 @@ switch (action.type) {
         return{
             loading:false,
             products:action.payload.fetchAllProducts,
-            productCount:action.payload.productCount
+            productCount:action.payload.numOfProducts,
+            resultPerPage:action.payload.numberOfProducts,
         }
         case ALL_PRODUCT_FAIL:
         return{

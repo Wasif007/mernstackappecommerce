@@ -2,13 +2,12 @@ import React, { Fragment, useState } from 'react'
 import "./Search.css"
 import { useNavigate } from "react-router-dom";
 
-const Search = ({history}) => {
+const Search = () => {
     const navigate = useNavigate();
     const [keyword,setKeyword]=useState("");
     const onSubmitHandler=(e)=>{
         e.preventDefault();
         if(keyword.trim()){
-            console.log(history);
             navigate(`/products/${keyword}`);
         }
         else{
