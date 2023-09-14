@@ -10,7 +10,7 @@ switch (action.type) {
             products:action.payload.fetchAllProducts,
             productCount:action.payload.numOfProducts,
             resultPerPage:action.payload.numberOfProducts,
-            count:action.payload.filteredProductsCount
+            count:action.payload.count,
         }
         case ALL_PRODUCT_FAIL:
         return{

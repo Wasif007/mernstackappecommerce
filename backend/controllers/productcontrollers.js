@@ -21,20 +21,13 @@ exports.getAllProducts=middleWareForTC(async(req,res)=>{
     //Keeping the count of products to be shown on front end
     const numOfProducts=await productSchema.countDocuments();
     //Finding from class where query is all and req.query is keyword
-    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search().filter();
-
+    const apiFiltersConstant= new ApiFeatures(productSchema.find(),req.query).search().filter().pagination(numberOfProducts);
+    const fetchFilteredCount=new ApiFeatures(productSchema.find(),req.query).search().filter();
+    let fetchAllProductsCount=await fetchFilteredCount.query;
+    let count=fetchAllProductsCount.length;
     let fetchAllProducts = await apiFiltersConstant.query;
-    console.log(fetchAllProducts.length)
-    let filteredProductsCount = fetchAllProducts.length;
-  
-    apiFiltersConstant.pagination(numberOfProducts);
-  
-    fetchAllProducts = await apiFiltersConstant.query;
-
    
-
-    
-res.status(200).json({success:true,fetchAllProducts,numOfProducts,numberOfProducts,filteredProductsCount});
+res.status(200).json({success:true,fetchAllProducts,numOfProducts,numberOfProducts,count});
 });
 
 //Route of updating a product here --Admin

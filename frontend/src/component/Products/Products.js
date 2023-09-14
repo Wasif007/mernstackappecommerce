@@ -25,8 +25,8 @@ setCurrentPage(e);
         dispatch(getAdminProduct(keywordFromParam.keyword,currentPage,price));
       }, [dispatch,keywordFromParam,currentPage,price]);
       const {products,loading,productCount,resultPerPage,count}=useSelector(state=>state.product);
-     console.log(count);
-  return (
+      
+        return (
    <Fragment>
     {
         loading?<Loader/>:<Fragment>
@@ -52,8 +52,8 @@ setCurrentPage(e);
          />
     </div>
     <div className='paginationBox'>
-        {
-            productCount<count && 
+        {   
+            resultPerPage<count && 
                 <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={resultPerPage}
