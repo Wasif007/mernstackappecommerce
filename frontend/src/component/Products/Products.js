@@ -7,6 +7,7 @@ import "./Products.css"
 import { useParams } from 'react-router-dom'
 import Pagination from "react-js-pagination";
 import { Slider, Typography } from '@mui/material'
+import MetaData from '../layout/MetaData'
 
 const categories=[
 "Footwear",
@@ -38,6 +39,7 @@ setCurrentPage(e);
    <Fragment>
     {
         loading?<Loader/>:<Fragment>
+            <MetaData title="PRODUCTS--Ecommerce"/>
             <h2 className='productsHeading'>Products</h2>
             <div className='products'>
                 {

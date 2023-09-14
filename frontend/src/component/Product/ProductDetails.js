@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom"
 import Loader from '../layout/Loader/Loading';
 import Review from '../layout/Review/review';
 import ReactStars from 'react-rating-stars-component'
+import MetaData from '../layout/MetaData';
 
 
 
@@ -17,7 +18,7 @@ const ProductDetails = () => {
     useEffect(() => {
         dispatch(getSingleProductAdmin(id));
       }, [dispatch,id]);
-      const {productDetails,error,loading}=useSelector(state=>state.productDetails);
+      const {productDetails,loading}=useSelector(state=>state.productDetails);
       const options = {
         size: "large",
         value: productDetails.ratings,
@@ -32,6 +33,7 @@ const ProductDetails = () => {
     <Fragment>
       {
         loading?<Loader/>:(<Fragment>
+          <MetaData title={`${productDetails.name}--Ecommerce`}/>
           <div className="ProductDetails">
                  <div>
                    <Carousel className='CarouselImage'>
