@@ -7,12 +7,18 @@ import "./Products.css"
 import { useParams } from 'react-router-dom'
 import Pagination from "react-js-pagination";
 import { Slider, Typography } from '@mui/material'
+
+const categories=[
+"Footwear",
+"Laptop",
+"Mobiles",
+"Cosmetics"]
 const Products = () => {
     let keywordFromParam=useParams();
 
     const [currentPage,setCurrentPage]=useState(1);
     const [price,setPrice]=useState([0,25000]);
-
+    const [category,setCategory]=useState("");
 
     const dispatch=useDispatch();
     const setCurrentPageNo=(e)=>{
@@ -22,8 +28,8 @@ setCurrentPage(e);
         setPrice(settingPrice);
     }
     useEffect(() => {
-        dispatch(getAdminProduct(keywordFromParam.keyword,currentPage,price));
-      }, [dispatch,keywordFromParam,currentPage,price]);
+        dispatch(getAdminProduct(keywordFromParam.keyword,currentPage,price,category));
+      }, [dispatch,keywordFromParam,currentPage,price,category]);
       const {products,loading,productCount,resultPerPage,count}=useSelector(state=>state.product);
       
         return (
@@ -50,6 +56,18 @@ setCurrentPage(e);
          min={0}
          max={25000}
          />
+         <Typography>Categories</Typography>
+         <ul
+         className='categoryBox'
+         >{categories.map((category)=>{
+          return  <li
+            className='category-link'
+            key={category}
+            onClick={()=>setCategory(category)}
+            >
+                {category}
+            </li>
+         })}</ul>
     </div>
     <div className='paginationBox'>
         {   
