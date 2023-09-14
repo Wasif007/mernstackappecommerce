@@ -19,6 +19,8 @@ const Products = () => {
     const [currentPage,setCurrentPage]=useState(1);
     const [price,setPrice]=useState([0,25000]);
     const [category,setCategory]=useState("");
+    const [ratings,setRatings]=useState(0);
+
 
     const dispatch=useDispatch();
     const setCurrentPageNo=(e)=>{
@@ -28,8 +30,8 @@ setCurrentPage(e);
         setPrice(settingPrice);
     }
     useEffect(() => {
-        dispatch(getAdminProduct(keywordFromParam.keyword,currentPage,price,category));
-      }, [dispatch,keywordFromParam,currentPage,price,category]);
+        dispatch(getAdminProduct(keywordFromParam.keyword,currentPage,price,category,ratings));
+      }, [dispatch,keywordFromParam,currentPage,price,category,ratings]);
       const {products,loading,productCount,resultPerPage,count}=useSelector(state=>state.product);
       
         return (
@@ -68,6 +70,20 @@ setCurrentPage(e);
                 {category}
             </li>
          })}</ul>
+         <fieldset>
+            <Typography className='legend'>Ratings Above</Typography>
+            <Slider
+             value={ratings}
+             onChange={(e,rating)=>{
+                setRatings(rating)
+             }}
+             valueLabelDisplay="auto"
+             aria-labelledby="continous-slide"
+             min={0}
+             max={5}
+            />
+
+         </fieldset>
     </div>
     <div className='paginationBox'>
         {   
