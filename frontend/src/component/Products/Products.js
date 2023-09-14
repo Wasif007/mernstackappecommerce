@@ -6,20 +6,26 @@ import Product from '../Home/Product'
 import "./Products.css"
 import { useParams } from 'react-router-dom'
 import Pagination from "react-js-pagination";
+import { Slider, Typography } from '@mui/material'
 const Products = () => {
     let keywordFromParam=useParams();
-    console.log(keywordFromParam);
+
     const [currentPage,setCurrentPage]=useState(1);
+    const [price,setPrice]=useState([0,25000]);
+
 
     const dispatch=useDispatch();
     const setCurrentPageNo=(e)=>{
 setCurrentPage(e);
     }
+    const priceHandler=(event,settingPrice)=>{
+        setPrice(settingPrice);
+    }
     useEffect(() => {
-        dispatch(getAdminProduct(keywordFromParam.keyword,currentPage));
-      }, [dispatch,keywordFromParam,currentPage]);
-      const {products,loading,productCount,resultPerPage}=useSelector(state=>state.product);
-      console.log(productCount,resultPerPage);
+        dispatch(getAdminProduct(keywordFromParam.keyword,currentPage,price));
+      }, [dispatch,keywordFromParam,currentPage,price]);
+      const {products,loading,productCount,resultPerPage,count}=useSelector(state=>state.product);
+     console.log(count);
   return (
    <Fragment>
     {
@@ -34,9 +40,20 @@ setCurrentPage(e);
             </div>
         </Fragment>
     }
+    <div className='filterBox'>
+        <Typography>Price</Typography>
+        <Slider
+         value={price}
+         onChange={priceHandler}
+         valueLabelDisplay="auto"
+         aria-labelledby="range-slider"
+         min={0}
+         max={25000}
+         />
+    </div>
     <div className='paginationBox'>
         {
-            productCount>resultPerPage && 
+            productCount<count && 
                 <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={resultPerPage}
