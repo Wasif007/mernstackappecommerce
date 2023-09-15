@@ -4,7 +4,8 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FaceIcon from '@mui/icons-material/Face';
 import "./loginsignup.css";
-
+import { useSelector,useDispatch } from 'react-redux';
+import {loginUser} from "../../actions/userAction"
 
 const LoginSignUpM = () => {
     const [loginEmail,setLoginEmail]=useState("");
@@ -20,8 +21,11 @@ const LoginSignUpM = () => {
     const [avatarPreview,setAvatarPreview]=useState("./Profile.png");
     const {name,email,password}=user;
     const loginTab=useRef(null);
+    const dispatch=useDispatch();
 
-    const formSubmitFunc=()=>{
+    const formSubmitFunc=(e)=>{
+        e.preventDefault();
+        dispatch(loginUser(loginEmail,loginPassword));
         console.log("Form Submitted");
     }
     const registerSubmit=(e)=>{
