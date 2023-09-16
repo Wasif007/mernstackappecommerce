@@ -2,10 +2,14 @@ const express=require("express");
 //using express
 const app=express();
 const cookie_parser=require("cookie-parser");
+const body_parser=require("body-parser");
+const fileUpload=require("express-fileupload");
 
 //Using json to read json data
 app.use(express.json());
 app.use(cookie_parser());
+app.use(body_parser.urlencoded({extended:true}));
+app.use(fileUpload());
 
 //Importing Middlewares
 const errorHandlingMiddlewares=require("./middleware/errorhandlingmiddleware")

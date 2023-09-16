@@ -1,5 +1,6 @@
 //Getting app from export from another file
 const app=require("./app");
+const cloudinary=require("cloudinary");          
 
 //Importing DataBase
 const database=require("./config/database");
@@ -12,6 +13,12 @@ process.on("uncaughtException",(error)=>{
 })
 
 database();
+cloudinary.config({ 
+    cloud_name: 'dllaqsbrm', 
+    api_key: '943714132421857', 
+    api_secret: 'exi1096VlXEqgJX9POR5EtyPlhI' 
+  });
+  
 //express function variable used to listen on a port
 const server=app.listen(4000,()=>{
     console.log(`Listening on http://localhost:4000`);

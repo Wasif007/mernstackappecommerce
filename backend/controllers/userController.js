@@ -6,17 +6,23 @@ const userSchema=require("../models/userModel");
 const middleWareForTC=require("../middleware/asyncErrorHandling");
 const sendEmail = require("../Utils/sendEmail");
 const crypto=require("crypto");
+const cloudinary=require("cloudinary");
 
 
 //Register a user Function
 exports.userRegister=middleWareForTC(async(req,res,next)=>{
+    const myCloud=await cloudinary.v2.uploader.upload(req.body.avatar,
+    { folder: "avatars",
+    width:150,
+crop:"scale" } 
+    );
     //Taking name email and password from request body
     const {name,email,password}=req.body;
     //Making a new user
     const userCreated = await userSchema.create({
         name,email,password,avatar:{
-            public_id:"Sample id",
-            url:"Sample profile id"
+            public_id:myCloud.public_id,
+            url:myCloud.secure_url
         }
     });
   
