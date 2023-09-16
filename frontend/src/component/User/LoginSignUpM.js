@@ -5,7 +5,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FaceIcon from '@mui/icons-material/Face';
 import "./loginsignup.css";
 import { useSelector,useDispatch } from 'react-redux';
-import {loginUser} from "../../actions/userAction"
+import {loginUser, registerUser} from "../../actions/userAction"
 import Loader from '../layout/Loader/Loading';
 
 const LoginSignUpM = () => {
@@ -24,11 +24,11 @@ const LoginSignUpM = () => {
     const {name,email,password}=user;
     const loginTab=useRef(null);
     const dispatch=useDispatch();
-    const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
+    const {isAuthenticated,loading}=useSelector(state=>state.user);
     const formSubmitFunc=(e)=>{
         e.preventDefault();
         dispatch(loginUser(loginEmail,loginPassword));
-        console.log("Form Submitted");
+        
     }
     useEffect(() => {
       if(isAuthenticated){
@@ -42,6 +42,7 @@ const LoginSignUpM = () => {
         myForm.set("email",email);
         myForm.set("password",password);
         myForm.set("avatar",avatar);
+        dispatch(registerUser(myForm));
 
     }
     const registerDataChange=(e)=>{
