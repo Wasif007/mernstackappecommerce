@@ -1,5 +1,8 @@
 import React from 'react'
-import {ReactNavbar} from "overlay-navbar"
+import { ReactNavbar } from "overlay-navbar";
+import {MdAccountCircle } from "react-icons/md";
+import {MdSearch } from "react-icons/md";
+import {MdAddShoppingCart } from "react-icons/md";
 import logo from "../../../images/logo.png";
 
 const options = {
@@ -9,6 +12,15 @@ const options = {
   navColor1: "white",
   logoHoverSize: "10px",
   logoHoverColor: "#eb4034",
+  profileIcon:true,
+  profileIconColor: "rgba(35, 35, 35,0.8)",
+  ProfileIconElement: MdAccountCircle, 
+  searchIcon:true,
+  searchIconColor: "rgba(35, 35, 35,0.8)",
+  SearchIconElement:MdSearch,
+  cartIcon:true,
+  cartIconColor: "rgba(35, 35, 35,0.8)",
+  CartIconElement:MdAddShoppingCart,
   link1Text: "Home",
   link2Text: "Products",
   link3Text: "Contact",
@@ -26,9 +38,6 @@ const options = {
   link1ColorHover: "#eb4034",
   link1Margin: "1vmax",
   profileIconUrl: "/login",
-  profileIconColor: "rgba(35, 35, 35,0.8)",
-  searchIconColor: "rgba(35, 35, 35,0.8)",
-  cartIconColor: "rgba(35, 35, 35,0.8)",
   profileIconColorHover: "#eb4034",
   searchIconColorHover: "#eb4034",
   cartIconColorHover: "#eb4034",

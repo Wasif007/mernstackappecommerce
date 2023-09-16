@@ -9,7 +9,7 @@ switch (action.type) {
             ...state,
             loading:false,
             isAuthenticated:true,
-            user:action.payload,
+            userFetched:action.payload,
         }
         case LOGIN_FAIL:
         return{
