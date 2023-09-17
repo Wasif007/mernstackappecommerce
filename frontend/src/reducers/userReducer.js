@@ -5,7 +5,7 @@ import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REG
 export const loginReducer=(state={user:{}},action)=>{
 switch (action.type) {
     
-        case REGISTER_SUCCESS:
+        
             case ME_USER_SUCCESS:
         return{
             ...state,
@@ -13,6 +13,13 @@ switch (action.type) {
             isAuthenticated:true,
             userFetched:action.payload.user,
         }
+        case REGISTER_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                isAuthenticated:true,
+                userFetched:action.payload.userCreated,
+            }
         case LOGIN_SUCCESS:
             return{
                 ...state,

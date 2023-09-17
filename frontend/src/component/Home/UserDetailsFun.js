@@ -10,14 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 import "./UserDetailsfun.css"
-
+import { Backdrop } from '@mui/material';
 const UserDetailsFun = ({user}) => {
   const dispatch=useDispatch();
   const [open,setOpen]=useState(false);
  
   const actions = [
     { icon: <PersonIcon />, name: 'Profile',func:account },
-    { icon: <ExitToAppIcon />, name: 'Exit',func:exitApp },
+    { icon: <ExitToAppIcon />, name: 'Logout',func:exitApp },
     { icon: <ShoppingCartIcon />, name: 'Shopping Cart',func:shoppingCart },
   ];
       if(user.role==="admin"){
@@ -39,12 +39,16 @@ function dashBoard(){
 }
 
   return (
+
     <Fragment>
+      <Backdrop open={open} style={{zIndex:"10"}}/>
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         onClose={()=>setOpen(false)}
         onOpen={()=>setOpen(true)}
         open={open}
+        style={{ zIndex: "11" }}
+        className='speedDial'
         direction='down'
         icon={<img
         className='speedDialIcon'

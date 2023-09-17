@@ -36,7 +36,8 @@ crop:"scale" }
      };
      res.status(200).cookie("token",token,options).json({
          success:true,
-         token
+         token,
+         userCreated
      })
 
 });
