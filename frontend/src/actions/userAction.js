@@ -1,5 +1,5 @@
 
-import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAIL, ME_USER_REQUEST, ME_USER_SUCCESS, ME_USER_FAIL} from "../constants/userConstant"
+import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAIL, ME_USER_REQUEST, ME_USER_SUCCESS, ME_USER_FAIL, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL} from "../constants/userConstant"
 import axios from "axios";
 
 //Post of User Login Request
@@ -42,7 +42,6 @@ export const registerUser = (userData) => async (dispatch) => {
 };
 
 //Single ME user fetch
-//Post of User Login Request
 export const meUserDetails = () => async (dispatch) => {
   try {
     dispatch({ type: ME_USER_REQUEST });
@@ -61,6 +60,24 @@ export const meUserDetails = () => async (dispatch) => {
   }
 };
 
+//Logout Me user
+export const logout = () => async (dispatch) => {
+  try {
+    dispatch({ type: ME_USER_REQUEST });
+   
+   await axios.get(`/api/v1/logout`);
+    
+    dispatch({
+      type: ME_USER_LOGOUT_SUCCESS,
+      
+    });
+  } catch (error) {
+    dispatch({
+      type: ME_USER_LOGOUT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
   //Clearing all errors
 export const clearAllErrorFunc=()=>async(dispatch)=>{
     dispatch({

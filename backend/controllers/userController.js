@@ -79,7 +79,8 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
      //Cookie setting
      res.status(200).cookie("token",token,options).json({
          success:true,
-         token
+         token,
+         findingUserWEmail
      })
 
 });

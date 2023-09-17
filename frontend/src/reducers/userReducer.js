@@ -1,19 +1,39 @@
 
-import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REGISTER_REQUEST,REGISTER_SUCCESS,ME_USER_FAIL,ME_USER_REQUEST,ME_USER_SUCCESS} from "../constants/userConstant"
+import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REGISTER_REQUEST,REGISTER_SUCCESS,ME_USER_FAIL,ME_USER_REQUEST,ME_USER_SUCCESS, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL} from "../constants/userConstant"
 
 //Login Request reducer
 export const loginReducer=(state={user:{}},action)=>{
 switch (action.type) {
-    case LOGIN_SUCCESS:
+    
         case REGISTER_SUCCESS:
             case ME_USER_SUCCESS:
         return{
             ...state,
             loading:false,
             isAuthenticated:true,
-            userFetched:action.payload,
+            userFetched:action.payload.user,
         }
-        
+        case LOGIN_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                isAuthenticated:true,
+                userFetched:action.payload.findingUserWEmail,
+            }
+        case ME_USER_LOGOUT_SUCCESS:
+            return {
+                loading:false,
+                user:null,
+                isAuthenticated:false
+            }
+        case ME_USER_LOGOUT_FAIL:
+            return{
+                ...state,
+                loading:false,
+                error:action.payload
+
+            }
+            
         case LOGIN_FAIL:
             case REGISTER_FAIL:
         return{

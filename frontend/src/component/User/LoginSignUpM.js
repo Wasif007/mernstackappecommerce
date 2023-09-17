@@ -28,6 +28,7 @@ const LoginSignUpM = () => {
     const formSubmitFunc=(e)=>{
         e.preventDefault();
         dispatch(loginUser(loginEmail,loginPassword));
+       
         
     }
     useEffect(() => {
