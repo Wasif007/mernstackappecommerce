@@ -1,5 +1,5 @@
 
-import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAIL, ME_USER_REQUEST, ME_USER_SUCCESS, ME_USER_FAIL, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL} from "../constants/userConstant"
+import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAIL, ME_USER_REQUEST, ME_USER_SUCCESS, ME_USER_FAIL, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL} from "../constants/userConstant"
 import axios from "axios";
 
 //Post of User Login Request
@@ -78,6 +78,26 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
+  //Put of User Profile Updata Request
+  export const profileUpdateUser = (userData) => async (dispatch) => {
+    try {
+      dispatch({ type: ME_USER_UPDATE_REQUEST });
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+  
+      const { data } = await axios.put(`/api/v1/me/update`,userData,config);
+      
+      dispatch({
+        type: ME_USER_UPDATE_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      dispatch({
+        type: ME_USER_UPDATE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+  
   //Clearing all errors
 export const clearAllErrorFunc=()=>async(dispatch)=>{
     dispatch({
