@@ -45,7 +45,7 @@ store.dispatch(meUserDetails());
       <Route path='/login' element={<LoginSignUpM/>}></Route>
       
       <Route exact path="/" element={ <ProtectedRoute /> } >
-    <Route exact path="/profile" element={ <ProfileUser /> } />
+    <Route exact path="/account" element={ <ProfileUser /> } />
 </Route>
 
 

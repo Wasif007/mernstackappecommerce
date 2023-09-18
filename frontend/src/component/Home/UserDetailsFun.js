@@ -25,7 +25,7 @@ const UserDetailsFun = ({user}) => {
      }
   const navigate = useNavigate();
   function account(){
-navigate("/profile");
+navigate("/account");
 }
 function exitApp(){
    dispatch(logout());
