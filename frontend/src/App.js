@@ -16,6 +16,8 @@ import { meUserDetails } from './actions/userAction';
 import { useSelector } from 'react-redux';
 import UserDetailsFun from './component/Home/UserDetailsFun';
 import Loader from './component/layout/Loader/Loading';
+import ProfileUser from './component/User/ProfileUser';
+import ProtectedRoute from './component/Route/ProtectedRoute';
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
@@ -41,6 +43,11 @@ store.dispatch(meUserDetails());
       <Route path='/products/:keyword' element={<Products/>}></Route>
       <Route path='/search' element={<Search/>}></Route>
       <Route path='/login' element={<LoginSignUpM/>}></Route>
+      
+      <Route exact path="/" element={ <ProtectedRoute /> } >
+    <Route exact path="/profile" element={ <ProfileUser /> } />
+</Route>
+
 
       </Routes>
 
