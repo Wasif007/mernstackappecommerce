@@ -19,6 +19,7 @@ import Loader from './component/layout/Loader/Loading';
 import ProfileUser from './component/User/ProfileUser';
 import ProtectedRoute from './component/Route/ProtectedRoute';
 import ProfileUserUpdate from './component/User/ProfileUserUpdate';
+import PasswordUserUpdate from './component/User/PasswordUserUpdate';
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
@@ -50,6 +51,9 @@ store.dispatch(meUserDetails());
 </Route>
 <Route exact path="/me/update" element={ <ProtectedRoute /> } >
     <Route exact path="/me/update" element={ <ProfileUserUpdate /> } />
+</Route>
+<Route exact path="/password/update" element={ <ProtectedRoute /> } >
+    <Route exact path="/password/update" element={ <PasswordUserUpdate /> } />
 </Route>
 
       </Routes>
