@@ -99,7 +99,7 @@ export const profileUpdateUserReducer=(state={},action)=>{
             }
             case ME_USER_UPDATE_RESET:
                 return{
-                    loading:true,
+                    loading:false,
                     isUpdated:false
                 }
             case ALL_ERROR_CLEAR:

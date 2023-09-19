@@ -143,7 +143,7 @@ exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
 exports.resetUserForgotPassword=middleWareForTC(async(req,res,next)=>{
     //Getting password for req.params and setting it via sha256 algo
  const resetPasswordToken=crypto.createHash('sha256').update(req.params.token).digest("hex");
- console.log(resetPasswordToken);
+
  //Finding the required user
  const userFind=await userSchema.findOne({
     resetPasswordToken,
@@ -225,9 +225,29 @@ exports.userPasswordUpdate=middleWareForTC(async(req,res,next)=>{
 //Updating user details route
 exports.userProfileUpdate=middleWareForTC(async(req,res,next)=>{
 
-   const details={
+   let details={
     name:req.body.name,
     email:req.body.email
+   }
+  
+   if(req.body.avatar!==""){
+    const user =await userSchema.findById(req.user.id);
+    
+    let imageUrl=user.avatar.public_id;
+      
+    await cloudinary.v2.uploader.destroy(imageUrl);
+     
+    const myCloud=await cloudinary.v2.uploader.upload(req.body.avatar,
+        { folder: "avatars",
+        width:150,
+    crop:"scale" } 
+        );
+       
+        details.avatar={
+            public_id:myCloud.public_id,
+            url:myCloud.secure_url
+        }
+
    }
       const findingUser=await userSchema.findByIdAndUpdate(req.user.id,details,{
         runValidators:true,

@@ -26,12 +26,11 @@ const ProfileUserUpdate = () => {
             setEmail(userFetched.email);
             setAvatarPreview(userFetched.avatar.url);
           }
-          console.log("useEffect");
-          console.log(userFetched);
+          
          
           if (isUpdated) {
             dispatch(meUserDetails());
-      console.log("updated");
+      
             navigate("/account");
       
             dispatch({
@@ -42,7 +41,7 @@ const ProfileUserUpdate = () => {
     }, [dispatch,navigate,userFetched,isUpdated]);
     const updateProfileSubmit=(e)=>{
         e.preventDefault();
-        console.log("submit");
+      
         const myForm =new FormData();
         myForm.set("name",name);
         myForm.set("email",email);
