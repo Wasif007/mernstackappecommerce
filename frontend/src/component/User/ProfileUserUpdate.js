@@ -27,7 +27,7 @@ const ProfileUserUpdate = () => {
             setAvatarPreview(userFetched.avatar.url);
           }
           console.log("useEffect");
-
+          console.log(userFetched);
          
           if (isUpdated) {
             dispatch(meUserDetails());
@@ -38,11 +38,7 @@ const ProfileUserUpdate = () => {
               type: ME_USER_UPDATE_RESET,
             });
         }
-        if (!isUpdated) {
-            
-            navigate("/me/update");
-        
-        }
+       
     }, [dispatch,navigate,userFetched,isUpdated]);
     const updateProfileSubmit=(e)=>{
         e.preventDefault();
