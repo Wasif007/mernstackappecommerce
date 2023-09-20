@@ -1,5 +1,5 @@
 
-import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REGISTER_REQUEST,REGISTER_SUCCESS,ME_USER_FAIL,ME_USER_REQUEST,ME_USER_SUCCESS, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_RESET, ME_USER_UPDATE_PASSWORD_SUCCESS, ME_USER_UPDATE_PASSWORD_FAIL, ME_USER_UPDATE_PASSWORD_REQUEST, ME_USER_UPDATE_PASSWORD_RESET} from "../constants/userConstant"
+import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REGISTER_REQUEST,REGISTER_SUCCESS,ME_USER_FAIL,ME_USER_REQUEST,ME_USER_SUCCESS, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_RESET, ME_USER_UPDATE_PASSWORD_SUCCESS, ME_USER_UPDATE_PASSWORD_FAIL, ME_USER_UPDATE_PASSWORD_REQUEST, ME_USER_UPDATE_PASSWORD_RESET, ME_USER_RESET_PASSWORD_REQUEST, ME_USER_RESET_PASSWORD_FAIL, ME_USER_RESET_PASSWORD_SUCCESS} from "../constants/userConstant"
 
 //Login Request reducer
 export const loginReducer=(state={user:{}},action)=>{
@@ -106,6 +106,42 @@ export const profileUpdateUserReducer=(state={},action)=>{
                     loading:false,
                     isUpdated:false
                 }
+            case ALL_ERROR_CLEAR:
+            return{
+    ...state,
+    error:null
+            }
+        default:
+            return state;
+    }}
+
+    //RESET PASSWORD REDUCER
+export const passwordResetUserReducer=(state={},action)=>{
+    switch (action.type) {
+        case ME_USER_RESET_PASSWORD_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                message:action.payload.message,
+                success:action.payload.success
+                
+            }
+         
+                case ME_USER_RESET_PASSWORD_FAIL:
+                return{
+                    ...state,
+                    loading:false,
+                    error:action.payload
+                }
+                
+              
+                    case ME_USER_RESET_PASSWORD_REQUEST:
+            return{
+                loading:true,
+                ...state,
+                error:null
+            }
+           
             case ALL_ERROR_CLEAR:
             return{
     ...state,

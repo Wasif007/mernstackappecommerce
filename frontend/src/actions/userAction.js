@@ -1,5 +1,5 @@
 
-import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAIL, ME_USER_REQUEST, ME_USER_SUCCESS, ME_USER_FAIL, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL, ME_USER_UPDATE_PASSWORD_REQUEST, ME_USER_UPDATE_PASSWORD_SUCCESS, ME_USER_UPDATE_PASSWORD_FAIL} from "../constants/userConstant"
+import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAIL, ME_USER_REQUEST, ME_USER_SUCCESS, ME_USER_FAIL, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL, ME_USER_UPDATE_PASSWORD_REQUEST, ME_USER_UPDATE_PASSWORD_SUCCESS, ME_USER_UPDATE_PASSWORD_FAIL, ME_USER_RESET_PASSWORD_REQUEST, ME_USER_RESET_PASSWORD_SUCCESS, ME_USER_RESET_PASSWORD_FAIL} from "../constants/userConstant"
 import axios from "axios";
 
 //Post of User Login Request
@@ -116,6 +116,26 @@ export const logout = () => async (dispatch) => {
       });
     }
   };
+
+  //Post of User Reset Password Request
+export const resetPasswordUser = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: ME_USER_RESET_PASSWORD_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.post(`/api/v1/reset/password`,email,config);
+    
+    dispatch({
+      type: ME_USER_RESET_PASSWORD_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ME_USER_RESET_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
   
   //Clearing all errors
 export const clearAllErrorFunc=()=>async(dispatch)=>{

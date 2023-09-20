@@ -2,13 +2,14 @@ import {createStore,combineReducers,applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { oneProductReducer, productReducer } from "./reducers/productReducer";
-import {loginReducer, profileUpdateUserReducer} from "./reducers/userReducer"
+import {loginReducer, passwordResetUserReducer, profileUpdateUserReducer} from "./reducers/userReducer"
 
 const reduce=combineReducers({
     product:productReducer,
     productDetails:oneProductReducer,
     user:loginReducer,
-    profileUpdate:profileUpdateUserReducer
+    profileUpdate:profileUpdateUserReducer,
+    passwordReset:passwordResetUserReducer,
 });
 const initialState={};
 const middleWare=[thunk];
