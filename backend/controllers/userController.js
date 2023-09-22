@@ -224,42 +224,47 @@ exports.userPasswordUpdate=middleWareForTC(async(req,res,next)=>{
 });
 //Updating user details route
 exports.userProfileUpdate=middleWareForTC(async(req,res,next)=>{
-
-   let details={
-    name:req.body.name,
-    email:req.body.email
-   }
   
-   if(req.body.avatar!==""){
-    const user =await userSchema.findById(req.user.id);
-    
-    let imageUrl=user.avatar.public_id;
-      
-    await cloudinary.v2.uploader.destroy(imageUrl);
-     
-    const myCloud=await cloudinary.v2.uploader.upload(req.body.avatar,
-        { folder: "avatars",
-        width:150,
-    crop:"scale" } 
-        );
-       
-        details.avatar={
-            public_id:myCloud.public_id,
-            url:myCloud.secure_url
-        }
-
-   }
-      const findingUser=await userSchema.findByIdAndUpdate(req.user.id,details,{
-        runValidators:true,
-        new:true,
-        userFindAndModify:false
-      })
-      findingUser.save();
-
-    res.status(200).json({
-        success:true,
-        findingUser
-    })
+    try {
+        let details={
+            name:req.body.name,
+            email:req.body.email
+           }
+           
+          console.log(req.body.avatar);
+           if(req.body.avatar!==""){
+            const user =await userSchema.findById(req.user.id);
+          
+            let imageUrl=user.avatar.public_id;
+              
+            await cloudinary.v2.uploader.destroy(imageUrl);
+             
+            const myCloud=await cloudinary.v2.uploader.upload(req.body.avatar,
+                { folder: "avatars",
+                width:150,
+            crop:"scale" } 
+                );
+               
+                details.avatar={
+                    public_id:myCloud.public_id,
+                    url:myCloud.secure_url
+                }
+        
+           }
+           
+              const userFetched=await userSchema.findByIdAndUpdate(req.user.id,details);
+             userFetched.save();
+        
+            res.status(200).json({
+                success:true,
+                userFetched
+            })
+    } catch (error) {
+        res.status(400).json({
+            message:error
+        })
+    }
+   
 });
 //Getting all users admin
 exports.gettingAllUsersFAdmin=middleWareForTC(async(req,res,next)=>{

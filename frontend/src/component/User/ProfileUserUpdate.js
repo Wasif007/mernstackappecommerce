@@ -4,7 +4,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FaceIcon from '@mui/icons-material/Face';
 import "./ProfileUserUpdate.css";
 import { useSelector,useDispatch } from 'react-redux';
-import {profileUpdateUser, meUserDetails} from "../../actions/userAction"
+import {profileUpdateUser, meUserDetails,clearAllErrorFunc} from "../../actions/userAction"
 import Loader from '../layout/Loader/Loading';
 import {   ME_USER_UPDATE_RESET } from '../../constants/userConstant';
 import MetaData from '../layout/MetaData';
@@ -12,7 +12,7 @@ import MetaData from '../layout/MetaData';
 const ProfileUserUpdate = () => {
     const navigate = useNavigate();
 
-    const [avatar,setAvatar]=useState();
+    const [avatar,setAvatar]=useState("");
     const [name,setName]=useState("");
     const [email,setEmail]=useState("");
     const [avatarPreview,setAvatarPreview]=useState("./Profile.png");
@@ -37,6 +37,7 @@ const ProfileUserUpdate = () => {
               type: ME_USER_UPDATE_RESET,
             });
         }
+       
        
     }, [dispatch,navigate,userFetched,isUpdated]);
     const updateProfileSubmit=(e)=>{
