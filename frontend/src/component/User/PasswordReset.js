@@ -5,12 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordUser } from "../../actions/userAction";
 import MetaData from "../layout/MetaData";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
 import JSAlert from 'js-alert'
 
 const PasswordReset = () => {
-    const navigate = useNavigate();
 
     const [email,setEmail]=useState("");
     const dispatch=useDispatch();
@@ -28,11 +25,9 @@ const PasswordReset = () => {
         JSAlert.alert(message);
           console.log(success);
         }
-        
-       
-       
+
      
-  }, [success]);
+  }, [success,message]);
    
   return (
     <Fragment>
