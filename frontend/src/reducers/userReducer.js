@@ -1,5 +1,5 @@
 
-import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REGISTER_REQUEST,REGISTER_SUCCESS,ME_USER_FAIL,ME_USER_REQUEST,ME_USER_SUCCESS, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_RESET, ME_USER_UPDATE_PASSWORD_SUCCESS, ME_USER_UPDATE_PASSWORD_FAIL, ME_USER_UPDATE_PASSWORD_REQUEST, ME_USER_UPDATE_PASSWORD_RESET, ME_USER_RESET_PASSWORD_REQUEST, ME_USER_RESET_PASSWORD_FAIL, ME_USER_RESET_PASSWORD_SUCCESS} from "../constants/userConstant"
+import {LOGIN_FAIL,LOGIN_REQUEST,LOGIN_SUCCESS,ALL_ERROR_CLEAR,REGISTER_FAIL,REGISTER_REQUEST,REGISTER_SUCCESS,ME_USER_FAIL,ME_USER_REQUEST,ME_USER_SUCCESS, ME_USER_LOGOUT_SUCCESS, ME_USER_LOGOUT_FAIL, ME_USER_UPDATE_SUCCESS, ME_USER_UPDATE_FAIL, ME_USER_UPDATE_REQUEST, ME_USER_UPDATE_RESET, ME_USER_UPDATE_PASSWORD_SUCCESS, ME_USER_UPDATE_PASSWORD_FAIL, ME_USER_UPDATE_PASSWORD_REQUEST, ME_USER_UPDATE_PASSWORD_RESET, ME_USER_RESET_PASSWORD_REQUEST, ME_USER_RESET_PASSWORD_FAIL, ME_USER_RESET_PASSWORD_SUCCESS, ME_USER_RESET_TOKEN_PASSWORD_FAIL, ME_USER_RESET_TOKEN_PASSWORD_REQUEST, ME_USER_RESET_TOKEN_PASSWORD_SUCCESS} from "../constants/userConstant"
 
 //Login Request reducer
 export const loginReducer=(state={user:{}},action)=>{
@@ -12,6 +12,7 @@ switch (action.type) {
             loading:false,
             isAuthenticated:true,
             userFetched:action.payload.user,
+            message:action.payload.message,
         }
         case REGISTER_SUCCESS:
             return{
@@ -37,11 +38,19 @@ switch (action.type) {
             return{
                 ...state,
                 loading:false,
-                error:action.payload
+                error:action.payload.message
 
             }
             
         case LOGIN_FAIL:
+            return{
+                ...state,
+                loading:false,
+                isAuthenticated:false,
+                user:null,
+                
+                error:action.payload
+            }
             case REGISTER_FAIL:
         return{
             loading:false,
@@ -62,7 +71,8 @@ switch (action.type) {
              case REGISTER_REQUEST:
         return{
             loading:true,
-            isAuthenticated:false
+            isAuthenticated:false,
+            error:action.payload
         }
 
         case ALL_ERROR_CLEAR:
@@ -126,8 +136,16 @@ export const passwordResetUserReducer=(state={},action)=>{
                 success:action.payload.success
                 
             }
+            case ME_USER_RESET_TOKEN_PASSWORD_SUCCESS:
+                return {
+                    ...state,
+        loading: false,
+        success: action.payload.success,
+        message: action.payload.message   
+                }
          
                 case ME_USER_RESET_PASSWORD_FAIL:
+                    case ME_USER_RESET_TOKEN_PASSWORD_FAIL:
                 return{
                     ...state,
                     loading:false,
@@ -136,6 +154,7 @@ export const passwordResetUserReducer=(state={},action)=>{
                 
               
                     case ME_USER_RESET_PASSWORD_REQUEST:
+                        case ME_USER_RESET_TOKEN_PASSWORD_REQUEST:
             return{
                 loading:true,
                 ...state,

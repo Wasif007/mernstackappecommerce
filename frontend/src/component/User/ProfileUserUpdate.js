@@ -4,7 +4,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FaceIcon from '@mui/icons-material/Face';
 import "./ProfileUserUpdate.css";
 import { useSelector,useDispatch } from 'react-redux';
-import {profileUpdateUser, meUserDetails,clearAllErrorFunc} from "../../actions/userAction"
+import {profileUpdateUser, meUserDetails} from "../../actions/userAction"
 import Loader from '../layout/Loader/Loading';
 import {   ME_USER_UPDATE_RESET } from '../../constants/userConstant';
 import MetaData from '../layout/MetaData';

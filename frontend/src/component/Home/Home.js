@@ -10,7 +10,7 @@ import Loader from "../layout/Loader/Loading";
 
 const Home = () => {
   const dispatch=useDispatch();
-   const {products,error,loading,productCount}=useSelector(state=>state.product);
+   const {products,loading}=useSelector(state=>state.product);
    
   useEffect(() => {
     dispatch(getAdminProduct());

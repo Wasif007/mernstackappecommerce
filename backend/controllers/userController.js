@@ -81,6 +81,7 @@ exports.userLogin=middleWareForTC(async(req,res,next)=>{
      res.status(200).cookie("token",token,options).json({
          success:true,
          token,
+         message:"Login Successful",
          findingUserWEmail
      })
 
@@ -113,9 +114,9 @@ exports.resetUserFunction=middleWareForTC(async(req,res,next)=>{
     //Saving the user so all tokens can be saved
     await user.save({validateBeforeSave:false});
     //Email made to be sent   
-    const emailSenturl=`http://localhost:4000/api/v1/reset/forgot/${token}`;
+    const emailSenturl=`http://localhost:3000/reset/forgot/${token}`;
     //Message to be sent saved
-    const message=`Email sent to you \n\n ${emailSenturl} \n If you have not sent this Kindly ignore this \n\n `;
+    const message=`Email sent to you temp\n\n ${emailSenturl} \n If you have not sent this Kindly ignore this \n\n `;
 
     try {
         await sendEmail({
@@ -180,7 +181,8 @@ userFind.save();
    //Cookie setting
    res.status(200).cookie("token",token,options).json({
        success:true,
-       token
+       token,
+       message:"Password Changed Successfully"
    })
 
 });

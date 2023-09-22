@@ -21,6 +21,7 @@ import ProtectedRoute from './component/Route/ProtectedRoute';
 import ProfileUserUpdate from './component/User/ProfileUserUpdate';
 import PasswordUserUpdate from './component/User/PasswordUserUpdate';
 import PasswordReset from './component/User/PasswordReset';
+import PasswordResetEmail from './component/User/PasswordResetEmail';
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
@@ -57,6 +58,9 @@ store.dispatch(meUserDetails());
     <Route exact path="/password/update" element={ <PasswordUserUpdate /> } />
 </Route>
 <Route path='/reset/password' element={<PasswordReset/>}></Route>
+<Route path='/reset/forgot/:token' element={<PasswordResetEmail/>}></Route>
+
+
       </Routes>
 
       

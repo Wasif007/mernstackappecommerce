@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import "./PasswordUserUpdate.css";
 import Loader from "../layout/Loader/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { meUserDetails, passwordUpdateUser } from "../../actions/userAction";
+import {  passwordUpdateUser } from "../../actions/userAction";
 import {ME_USER_UPDATE_PASSWORD_RESET} from "../../constants/userConstant";
 import MetaData from "../../component/layout/MetaData";
 import  LockOpen from "@mui/icons-material/LockOpen"
