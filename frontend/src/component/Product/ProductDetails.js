@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Carousel from "react-material-ui-carousel";
 import { useDispatch,useSelector } from 'react-redux'
 import { getSingleProductAdmin } from '../../actions/productAction'
@@ -12,7 +12,7 @@ import MetaData from '../layout/MetaData';
 
 
 const ProductDetails = () => {
-   
+   const [quantity,setQuantity]=useState(1);
     let {id}=useParams();
     const dispatch=useDispatch();
     useEffect(() => {
@@ -29,6 +29,26 @@ const ProductDetails = () => {
         activeColor:"tomato",
         isHalf:true
       };
+      const increaseQuantity=()=>{
+
+        console.log(quantity);
+        console.log(productDetails.Stock);
+        if(productDetails.Stock <=quantity){
+          return;
+        }
+        let quan=quantity+1;
+        setQuantity(quan);
+      }
+      const decreaseQuantity=()=>{
+        console.log(quantity);
+        console.log(productDetails.Stock);
+        if(1 >=quantity){
+          return;
+        }
+        let quan=quantity-1;
+        setQuantity(quan);
+     
+      }
   return (
     <Fragment>
       {
@@ -68,9 +88,9 @@ const ProductDetails = () => {
                      <h1>{`$${productDetails.price}`}</h1>
                      <div className="detailsBlock-3-1">
                        <div className="detailsBlock-3-1-1">
-                         <button >-</button>
-                         <input readOnly type="number"  />
-                         <button >+</button>
+                         <button onClick={decreaseQuantity}>-</button>
+                         <input readOnly type="number" value={quantity} />
+                         <button onClick={increaseQuantity}>+</button>
                        </div>
                        <button
                          disabled={productDetails.Stock < 1 ? true : false}
