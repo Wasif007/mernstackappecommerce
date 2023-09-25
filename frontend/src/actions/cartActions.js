@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_TO_CART } from "../constants/cartConstant";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../constants/cartConstant";
 
 
 
@@ -22,3 +22,14 @@ export const addtoCart = (id,quantity) => async (dispatch,getState) => {
       localStorage.setItem("cartItem",JSON.stringify(getState().cart.cartItem))
    
   };
+  //Remove from Cart Request
+export const removeFromCart = (id) => async (dispatch,getState) => {
+   
+  
+  dispatch({
+    type: REMOVE_FROM_CART,
+    payload:id,
+  });
+  localStorage.setItem("cartItem",JSON.stringify(getState().cart.cartItem))
+
+};

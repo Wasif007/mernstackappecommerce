@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import "./Cart.css"
 import CartItemCard from './CartItemCard'
 import {useSelector,useDispatch} from "react-redux"
-import { addtoCart } from '../../../actions/cartActions'
+import { addtoCart, removeFromCart } from '../../../actions/cartActions'
 
 const Cart = () => {
     const dispatch=useDispatch();
@@ -25,6 +25,9 @@ const decreaseProductCount=(id,quantity)=>{
     dispatch(addtoCart(id,newQuan));
 
 }
+const deleteProductFCart=(id)=>{
+dispatch(removeFromCart(id));
+}
   return (
     <Fragment>
     <div className="cartPage">
@@ -35,8 +38,8 @@ const decreaseProductCount=(id,quantity)=>{
       </div>
       {
         cartItem && cartItem.map((item)=>(
-            <div className='cartContainer'>
-        <CartItemCard item={item}/>
+            <div className='cartContainer' key={item.product}>
+        <CartItemCard item={item}  deleteProductFCart={deleteProductFCart}/>
         <div className='cartInput'>
             <button onClick={()=> {return increaseProductCount(item.product,item.quantity,item.Stock)}}>+</button>
             <input readOnly value={item.quantity}/>
