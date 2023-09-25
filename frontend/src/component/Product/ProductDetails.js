@@ -8,7 +8,8 @@ import Loader from '../layout/Loader/Loading';
 import Review from '../layout/Review/review';
 import ReactStars from 'react-rating-stars-component'
 import MetaData from '../layout/MetaData';
-
+import { addtoCart } from '../../actions/cartActions';
+import JSAlert from 'js-alert'
 
 
 const ProductDetails = () => {
@@ -31,8 +32,7 @@ const ProductDetails = () => {
       };
       const increaseQuantity=()=>{
 
-        console.log(quantity);
-        console.log(productDetails.Stock);
+        
         if(productDetails.Stock <=quantity){
           return;
         }
@@ -40,14 +40,18 @@ const ProductDetails = () => {
         setQuantity(quan);
       }
       const decreaseQuantity=()=>{
-        console.log(quantity);
-        console.log(productDetails.Stock);
+        
         if(1 >=quantity){
           return;
         }
         let quan=quantity-1;
         setQuantity(quan);
      
+      }
+      const addtoCartFun=()=>{
+        dispatch(addtoCart(id,quantity));
+        JSAlert.alert("Item added to Cart");
+
       }
   return (
     <Fragment>
@@ -94,7 +98,7 @@ const ProductDetails = () => {
                        </div>
                        <button
                          disabled={productDetails.Stock < 1 ? true : false}
-                         
+                         onClick={addtoCartFun}
                        >
                          Add to Cart
                        </button>
