@@ -22,6 +22,7 @@ import ProfileUserUpdate from './component/User/ProfileUserUpdate';
 import PasswordUserUpdate from './component/User/PasswordUserUpdate';
 import PasswordReset from './component/User/PasswordReset';
 import PasswordResetEmail from './component/User/PasswordResetEmail';
+import Cart from './component/Home/Cart/Cart';
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
@@ -59,6 +60,7 @@ store.dispatch(meUserDetails());
 </Route>
 <Route path='/reset/password' element={<PasswordReset/>}></Route>
 <Route path='/reset/forgot/:token' element={<PasswordResetEmail/>}></Route>
+<Route path='/cart' element={<Cart/>}></Route>
 
 
       </Routes>
