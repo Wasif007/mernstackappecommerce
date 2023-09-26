@@ -67,7 +67,7 @@ dispatch(removeFromCart(id));
             <div></div>
             <div className='cartGrossProfitBox'>
             <p>Gross Profit</p>
-            <p>{`$500`}</p>
+            <p>${cartItem.reduce((acc,item)=>acc+item.quantity*item.price,0)}</p>
             </div>
             <div></div>
             <div className='checkOutBtn'>
