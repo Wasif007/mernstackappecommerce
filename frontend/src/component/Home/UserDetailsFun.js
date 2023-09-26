@@ -7,18 +7,19 @@ import PersonIcon from "@mui/icons-material/Person"
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userAction';
 import "./UserDetailsfun.css"
 import { Backdrop } from '@mui/material';
+
 const UserDetailsFun = ({user}) => {
   const dispatch=useDispatch();
   const [open,setOpen]=useState(false);
- 
+  const {cartItem}=useSelector(state=>state.cart);
   const actions = [
     { icon: <PersonIcon />, name: 'Profile',func:account },
     { icon: <ExitToAppIcon />, name: 'Logout',func:exitApp },
-    { icon: <ShoppingCartIcon />, name: 'Shopping Cart',func:shoppingCart },
+    { icon: <ShoppingCartIcon style={{color:cartItem.length>0?"tomato":"unset"}}/>, name: `Cart (${cartItem.length})`,func:shoppingCart },
   ];
       if(user.role==="admin"){
        actions.unshift( { icon: <DashBoard />, name: 'DashBoard',func:dashBoard })
@@ -32,7 +33,7 @@ function exitApp(){
  
 }
 function shoppingCart(){
-  navigate("/shoppingcart");
+  navigate("/cart");
 }
 function dashBoard(){
   navigate("/dashboard");
@@ -62,6 +63,7 @@ function dashBoard(){
             icon={action.icon}
             tooltipTitle={action.name}
             onClick={action.func}
+            tooltipOpen={window.innerWidth<600?true:false}
           />
         ))} 
       </SpeedDial>
