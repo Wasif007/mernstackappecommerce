@@ -8,10 +8,13 @@ import { useSelector,useDispatch } from 'react-redux';
 import {loginUser, registerUser,clearAllErrorFunc} from "../../actions/userAction"
 import Loader from '../layout/Loader/Loading';
 import JSAlert from 'js-alert'
+import { useLocation } from "react-router-dom";
+
 
 
 const LoginSignUpM = () => {
   const navigate = useNavigate();
+  const location = useLocation()
     const [loginEmail,setLoginEmail]=useState("");
     const [loginPassword,setLoginPassword]=useState("");
     const switcherTab=useRef(null);
@@ -26,7 +29,7 @@ const LoginSignUpM = () => {
     const {name,email,password}=user;
     const loginTab=useRef(null);
     const dispatch=useDispatch();
-    const {error,isAuthenticated,loading,message}=useSelector(state=>state.user);
+    const {error,isAuthenticated,loading}=useSelector(state=>state.user);
     
     const formSubmitFunc=(e)=>{
         e.preventDefault();
@@ -34,6 +37,8 @@ const LoginSignUpM = () => {
        
         
     }
+    const redirect = location.search ? location.search.split("=")[1] : "/account";
+    console.log(redirect);
     useEffect(() => {
       if (error) {
         JSAlert.alert(error);
@@ -41,9 +46,9 @@ const LoginSignUpM = () => {
       }
 
       if(isAuthenticated){
-        navigate("/account");
+        navigate(redirect);
       }
-    }, [dispatch,isAuthenticated,error,navigate]);
+    }, [dispatch,isAuthenticated,error,navigate,redirect]);
     const registerSubmit=(e)=>{
         e.preventDefault();
         const myForm =new FormData();

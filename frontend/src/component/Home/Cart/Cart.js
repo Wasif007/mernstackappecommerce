@@ -5,11 +5,13 @@ import {useSelector,useDispatch} from "react-redux"
 import { addtoCart, removeFromCart } from '../../../actions/cartActions'
 import { Link } from 'react-router-dom'
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Cart = () => {
     const dispatch=useDispatch();
+    const navigate=useNavigate();
     const {cartItem}=useSelector(state=>state.cart);
 const increaseProductCount=(id,quantity,Stock)=>{
     let newQuan=quantity+1;
@@ -31,6 +33,9 @@ const decreaseProductCount=(id,quantity)=>{
 }
 const deleteProductFCart=(id)=>{
 dispatch(removeFromCart(id));
+}
+const checkOutFunction=()=>{
+  navigate("/login?redirect=shipping");
 }
   return (
    <Fragment>
@@ -71,7 +76,7 @@ dispatch(removeFromCart(id));
             </div>
             <div></div>
             <div className='checkOutBtn'>
-                <button>Check Out</button>
+                <button onClick={checkOutFunction}>Check Out</button>
             </div>
           </div>
           </div>
