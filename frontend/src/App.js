@@ -23,6 +23,7 @@ import PasswordUserUpdate from './component/User/PasswordUserUpdate';
 import PasswordReset from './component/User/PasswordReset';
 import PasswordResetEmail from './component/User/PasswordResetEmail';
 import Cart from './component/Home/Cart/Cart';
+import Shipping from './component/Home/Cart/Shipping';
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
@@ -61,6 +62,9 @@ store.dispatch(meUserDetails());
 <Route path='/reset/password' element={<PasswordReset/>}></Route>
 <Route path='/reset/forgot/:token' element={<PasswordResetEmail/>}></Route>
 <Route path='/cart' element={<Cart/>}></Route>
+<Route exact path="/login/shipping" element={ <ProtectedRoute /> } >
+    <Route exact path="/login/shipping" element={ <Shipping /> } />
+</Route>
 
 
       </Routes>

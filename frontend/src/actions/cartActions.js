@@ -33,3 +33,14 @@ export const removeFromCart = (id) => async (dispatch,getState) => {
   localStorage.setItem("cartItem",JSON.stringify(getState().cart.cartItem))
 
 };
+  //Shipping to address Request
+  export const shippingCart = (data) => async (dispatch) => {
+   
+    console.log(data);
+    dispatch({
+      type: REMOVE_FROM_CART,
+      payload:data,
+    });
+    localStorage.setItem("shippingInfo",JSON.stringify(data))
+  
+  };
