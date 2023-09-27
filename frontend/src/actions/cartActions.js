@@ -36,7 +36,6 @@ export const removeFromCart = (id) => async (dispatch,getState) => {
   //Shipping to address Request
   export const shippingCart = (data) => async (dispatch) => {
    
-    console.log(data);
     dispatch({
       type: REMOVE_FROM_CART,
       payload:data,

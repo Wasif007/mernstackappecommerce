@@ -10,14 +10,17 @@ app.use(express.json());
 app.use(cookie_parser());
 app.use(body_parser.urlencoded({extended:true}));
 app.use(fileUpload());
+app.use(express.static("public"));
 
 //Importing Middlewares
 const errorHandlingMiddlewares=require("./middleware/errorhandlingmiddleware")
+require("dotenv").config({ path: "backend/config/config.env" });
 
 //Importing routes here
 const productsAll=require("./routes/productRoute");
 const userAll=require("./routes/userRoute");
 const orderAll=require("./routes/orderRoute");
+const payment=require("./routes/paymentRoute");
 
 app.use(errorHandlingMiddlewares);
 
@@ -25,6 +28,7 @@ app.use(errorHandlingMiddlewares);
 app.use("/api/v1",productsAll);
 app.use("/api/v1",userAll);
 app.use("/api/v1",orderAll);
+app.use("/api/v1",payment);
 
 
 

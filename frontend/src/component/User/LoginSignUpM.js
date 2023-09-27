@@ -38,7 +38,7 @@ const LoginSignUpM = () => {
         
     }
     const redirect = location.search ? location.search.split("=")[1] : "/account";
-    console.log(redirect);
+    
     useEffect(() => {
       if (error) {
         JSAlert.alert(error);

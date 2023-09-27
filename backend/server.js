@@ -4,6 +4,8 @@ const cloudinary=require("cloudinary");
 
 //Importing DataBase
 const database=require("./config/database");
+require("dotenv").config({ path: "backend/config/config.env" });
+
 //UnCaught Exception errors
 process.on("uncaughtException",(error)=>{
     console.log(`Error is ${error.message}`);

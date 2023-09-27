@@ -24,16 +24,22 @@ import PasswordReset from './component/User/PasswordReset';
 import PasswordResetEmail from './component/User/PasswordResetEmail';
 import Cart from './component/Home/Cart/Cart';
 import Shipping from './component/Home/Cart/Shipping';
-import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond"
+import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond";
+import Payment from "./component/Home/Cart/Payment.js";
+
+
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
   useEffect(() => {
+
+
     WebFont.load({
       google: {
         families: ["Roboto"],
       },
     });
+    
 store.dispatch(meUserDetails());
    
   }, []);
@@ -69,6 +75,13 @@ store.dispatch(meUserDetails());
 <Route exact path="/order/confirm" element={ <ProtectedRoute /> } >
     <Route exact path="/order/confirm" element={ <OrderConfirmSecond /> } />
 </Route>
+
+<Route exact path="/process/payment" element={ <ProtectedRoute /> } >
+    <Route exact path="/process/payment" element={ <Payment /> } />
+</Route>
+
+      
+      
 
 
       </Routes>
