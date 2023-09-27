@@ -24,6 +24,7 @@ import PasswordReset from './component/User/PasswordReset';
 import PasswordResetEmail from './component/User/PasswordResetEmail';
 import Cart from './component/Home/Cart/Cart';
 import Shipping from './component/Home/Cart/Shipping';
+import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond"
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
  
@@ -64,6 +65,9 @@ store.dispatch(meUserDetails());
 <Route path='/cart' element={<Cart/>}></Route>
 <Route exact path="/login/shipping" element={ <ProtectedRoute /> } >
     <Route exact path="/login/shipping" element={ <Shipping /> } />
+</Route>
+<Route exact path="/order/confirm" element={ <ProtectedRoute /> } >
+    <Route exact path="/order/confirm" element={ <OrderConfirmSecond /> } />
 </Route>
 
 
