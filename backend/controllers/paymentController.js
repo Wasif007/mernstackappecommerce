@@ -6,7 +6,7 @@ const stripe = require("stripe")('sk_test_51Nv1D2AtWWs18icLfK1yjkq4pQ8HU9rTFpgWW
 exports.processPayment = middleWareForTC(async (req, res, next) => {
   const myPayment = await stripe.paymentIntents.create({
     amount: req.body.amount,
-    currency: "dollar",
+    currency: "usd",
     metadata: {
       company: "Ecommerce",
     },

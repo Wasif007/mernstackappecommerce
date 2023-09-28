@@ -12,7 +12,8 @@ import Search from "./component/Products/Search.js"
 import LoginSignUpM from './component/User/LoginSignUpM';
 import store from "./store";
 import { meUserDetails } from './actions/userAction';
-
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { useSelector } from 'react-redux';
 import UserDetailsFun from './component/Home/UserDetailsFun';
 import Loader from './component/layout/Loader/Loading';
@@ -27,6 +28,8 @@ import Shipping from './component/Home/Cart/Shipping';
 import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond";
 import Payment from "./component/Home/Cart/Payment.js";
 
+const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
+    
 
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
@@ -76,11 +79,16 @@ store.dispatch(meUserDetails());
     <Route exact path="/order/confirm" element={ <OrderConfirmSecond /> } />
 </Route>
 
-<Route exact path="/process/payment" element={ <ProtectedRoute /> } >
-    <Route exact path="/process/payment" element={ <Payment /> } />
+<Route exact path="/payment/process" element={ <ProtectedRoute /> } >
+<Route
+  path="/payment/process"
+  element={
+      <Elements stripe={loadStripe(stripeApiKey)}>
+        <Payment />
+      </Elements>
+  }
+/>
 </Route>
-
-      
       
 
 
