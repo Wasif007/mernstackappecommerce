@@ -1,7 +1,8 @@
+import axios from "axios";
 import { ALL_ERROR_CLEAR, NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS } from "../constants/orderConstant";
 
   //Posting a order Action
-  export const resetPasswordMailUser = (order) => async (dispatch) => {
+  export const newOrderCreationAction = (order) => async (dispatch) => {
     try {
       dispatch({ type:  NEW_ORDER_REQUEST});
       const config = { headers: { "Content-Type": "application/json" } };

@@ -19,6 +19,7 @@ import EventIcon from '@mui/icons-material/Event';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import JSAlert from 'js-alert'
 import axios from "axios";
+import { newOrderCreationAction } from "../../../actions/orderAction";
 
 
 const Payment = () => {
@@ -29,6 +30,7 @@ const Payment = () => {
       const {userFetched}=useSelector(state=>state.user);
       const {orderInfo}=useSelector(state=>state.orderInfo);
       const order = JSON.parse(sessionStorage.getItem("orderInfo"));
+      const dispatch=useDispatch();
       const payBtn=useRef(null);
       const paymentData={
         amount:Math.round(order.totalPrice*100),
@@ -73,7 +75,7 @@ const Payment = () => {
         if (result.error) {
           payBtn.current.disabled = false;
   
-          JSAlert.alert(result.error.message);
+          JSAlert.alert(result.error);
         } 
         else {
           if (result.paymentIntent.status === "succeeded") {
@@ -81,6 +83,7 @@ const Payment = () => {
               id:result.paymentIntent.id,
               status:result.paymentIntent.status
             }
+            dispatch(newOrderCreationAction(orderCreation));
             navigate("/success");
           } else {
             JSAlert.alert("There's some issue while processing payment ");
