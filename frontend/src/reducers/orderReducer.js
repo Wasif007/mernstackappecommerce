@@ -1,4 +1,4 @@
-import { ALL_ERROR_CLEAR, NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS } from "../constants/orderConstant";
+import { ALL_ERROR_CLEAR, MY_ORDER_FAIL, MY_ORDER_REQUEST, MY_ORDER_SUCCESS, NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS } from "../constants/orderConstant";
 
 //Order Placing reducer
 export const orderPlaceReducer = (state = { orderInfo: {} }, action) => {
@@ -28,3 +28,31 @@ export const orderPlaceReducer = (state = { orderInfo: {} }, action) => {
         return state;
     }
   };
+
+  //My all orders reducer
+export const myOrderReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case MY_ORDER_REQUEST:
+      return {
+        loading: true,
+      };
+    case MY_ORDER_SUCCESS:
+      return {
+        loading: false,
+        order: action.payload,
+      };
+    case  MY_ORDER_FAIL:
+      return {
+        loading: true,
+        error: action.payload,
+      };
+
+    case ALL_ERROR_CLEAR:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+}
