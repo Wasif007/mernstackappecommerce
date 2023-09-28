@@ -1,4 +1,4 @@
-import { NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS } from "../constants/orderConstant";
+import { ALL_ERROR_CLEAR, NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS } from "../constants/orderConstant";
 
 //Order Placing reducer
 export const orderPlaceReducer = (state = { orderInfo: {} }, action) => {

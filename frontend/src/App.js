@@ -27,6 +27,7 @@ import Cart from './component/Home/Cart/Cart';
 import Shipping from './component/Home/Cart/Shipping';
 import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond";
 import Payment from "./component/Home/Cart/Payment.js";
+import OrderSuccessPla from './component/Home/Cart/OrderSuccessPla';
 
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
     
@@ -88,6 +89,10 @@ store.dispatch(meUserDetails());
       </Elements>
   }
 />
+</Route>
+
+<Route exact path="/success" element={ <ProtectedRoute /> } >
+    <Route exact path="/success" element={ <OrderSuccessPla /> } />
 </Route>
       
 

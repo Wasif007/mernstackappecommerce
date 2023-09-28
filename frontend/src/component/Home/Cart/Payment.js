@@ -2,8 +2,6 @@ import React, { Fragment, useEffect, useRef } from "react";
 import CheckoutSteps from "../Cart/CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import { Typography} from "@mui/material";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from 'react-router-dom';
 
 import MetaData from "../../layout/MetaData";
@@ -29,10 +27,19 @@ const Payment = () => {
       const navigate=useNavigate();
       const {shippingInfo,cartItem}=useSelector(state=>state.cart);
       const {userFetched}=useSelector(state=>state.user);
-      const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+      const {orderInfo}=useSelector(state=>state.orderInfo);
+      const order = JSON.parse(sessionStorage.getItem("orderInfo"));
       const payBtn=useRef(null);
       const paymentData={
-        amount:Math.round(orderInfo.totalPrice*100),
+        amount:Math.round(order.totalPrice*100),
+      }
+      const orderCreation={
+        shippingInfo,
+        orderItems:cartItem,
+        itemsPrice:order.subtotal,
+        taxPrice:order.tax,
+        shippingPrice:order.shippingCharges,
+        totalPrice:order.totalPrice
       }
     const submitHandler=async(e)=>{
       e.preventDefault();
@@ -70,7 +77,10 @@ const Payment = () => {
         } 
         else {
           if (result.paymentIntent.status === "succeeded") {
-  
+            orderCreation.paymentInfo={
+              id:result.paymentIntent.id,
+              status:result.paymentIntent.status
+            }
             navigate("/success");
           } else {
             JSAlert.alert("There's some issue while processing payment ");
@@ -109,7 +119,7 @@ const Payment = () => {
 
           <input
             type="submit"
-            value={`Pay - $${orderInfo && orderInfo.totalPrice}`}
+            value={`Pay - $${order && order.totalPrice}`}
             ref={payBtn}
             className="paymentFormBtn"
           />
