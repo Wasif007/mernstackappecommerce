@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, useRef } from "react";
 import CheckoutSteps from "../Cart/CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import { Typography} from "@mui/material";
@@ -28,7 +28,6 @@ const Payment = () => {
       const navigate=useNavigate();
       const {shippingInfo,cartItem}=useSelector(state=>state.cart);
       const {userFetched}=useSelector(state=>state.user);
-      const {orderInfo}=useSelector(state=>state.orderInfo);
       const order = JSON.parse(sessionStorage.getItem("orderInfo"));
       const dispatch=useDispatch();
       const payBtn=useRef(null);

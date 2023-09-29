@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import "./myOrdersDetails.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getOrderMeAction } from "../../actions/orderAction";
+import {  getOrderMeAction } from "../../actions/orderAction";
 import Loader from "../layout/Loader/Loading";
 import { Link } from "react-router-dom";
 import Typography from '@mui/material/Typography';
@@ -29,7 +29,7 @@ const MyOrderDetails = () => {
     {field:"action",headerName:"Actions",minWidth:150,type:"number",flex:0.5,sortable:false,
     renderCell:(params)=>{
       return (
-        <Link to={`/order/${params.id}`}>
+        <Link to={`/orderdetails/${params.id}`}>
         <LaunchIcon/>
         </Link>
       )

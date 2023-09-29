@@ -1,5 +1,5 @@
 
-import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, ONE_PRODUCT_REQUEST} from "../constants/productConstant"
+import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, REVIEW_PRODUCT_RESET} from "../constants/productConstant"
 
 //All products get reducer
 export const productReducer=(state={products:[]},action)=>{
@@ -61,3 +61,35 @@ export const oneProductReducer = (state = { productDetails: {} }, action) => {
         return state;
     }
   };
+  //Review Posting reducer
+export const reviewPostingReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REVIEW_PRODUCT_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+    case REVIEW_SUCCESS:
+      return {
+        loading: false,
+        productDetails: action.payload.productTFind,
+      };
+    case REVIEW_PRODUCT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+      case REVIEW_PRODUCT_RESET:
+        return{
+          
+        }
+
+    case ALL_ERROR_CLEAR:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
