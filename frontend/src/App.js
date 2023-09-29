@@ -28,9 +28,10 @@ import Shipping from './component/Home/Cart/Shipping';
 import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond";
 import Payment from "./component/Home/Cart/Payment.js";
 import OrderSuccessPla from './component/Home/Cart/OrderSuccessPla';
-import MyOrderDetails from "./component/Order/MyOrderDetails.js"
+import MyOrderDetails from "./component/Order/MyOrderDetails.js";
+import MySingleOrderDetails from "./component/Order/MySingleOrderDetails.js";
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
-    
+
 
 function App() {
   const {isAuthenticated,loading,userFetched}=useSelector(state=>state.user);
@@ -100,7 +101,9 @@ store.dispatch(meUserDetails());
 </Route>
       
 
-
+<Route exact path="/orderdetails/:id" element={ <ProtectedRoute /> } >
+    <Route exact path="/orderdetails/:id" element={ <MySingleOrderDetails /> } />
+</Route>
       </Routes>
 
       
