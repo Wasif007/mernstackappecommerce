@@ -5,6 +5,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import DashBoard from "@mui/icons-material/Dashboard"
 import PersonIcon from "@mui/icons-material/Person"
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +20,8 @@ const UserDetailsFun = ({user}) => {
   const actions = [
     { icon: <PersonIcon />, name: 'Profile',func:account },
     { icon: <ExitToAppIcon />, name: 'Logout',func:exitApp },
+    { icon: <ListAltIcon />, name: 'Orders',func:orderApp },
+
     { icon: <ShoppingCartIcon style={{color:cartItem.length>0?"tomato":"unset"}}/>, name: `Cart (${cartItem.length})`,func:shoppingCart },
   ];
       if(user.role==="admin"){
@@ -31,6 +34,9 @@ navigate("/account");
 function exitApp(){
    dispatch(logout());
  
+}
+function orderApp(){
+  navigate("/myorder");
 }
 function shoppingCart(){
   navigate("/cart");
