@@ -82,13 +82,13 @@ exports.findingASProduct=middleWareForTC(async(req,res)=>{
 //Route to make reviews and ratings update
 exports.reviewsAndRatingFunc=middleWareForTC(async(req,res,next)=>{
     //destructring all from req.body
-const {review,rating,productId}=req.body;
+const {comment,rating,productId}=req.body;
 //Making object of required documents
 const reviewUpdate={
     userAdded:req.user._id,
     name:req.user.name,
-    review,
-    rating
+    comment,
+    rating: Number(rating),
 }
 //Finding the required product from product Id
 const productFinding=await productSchema.findById(productId);
@@ -100,7 +100,7 @@ if(isReviewed){
 productFinding.reviews.forEach(rev=>{
     if(rev.userAdded.toString()===req.user._id.toString()){
     rev.rating=rating;
-    rev.review=Number(review);
+    rev.comment=comment;
     }
    
 })

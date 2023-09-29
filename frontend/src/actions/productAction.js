@@ -1,4 +1,4 @@
-import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL} from "../constants/productConstant"
+import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL} from "../constants/productConstant"
 import axios from "axios";
 
 // Get All Products For Admin
@@ -43,6 +43,27 @@ export const getSingleProductAdmin = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ONE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Review Submitting
+export const reviewPostingAction = (reviewData) => async (dispatch) => {
+  try {
+    dispatch({ type: REVIEW_PRODUCT_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.put(`/api/v1/product/ratings`,reviewData,config);
+
+    dispatch({
+      type: REVIEW_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: REVIEW_PRODUCT_FAIL,
       payload: error.response.data.message,
     });
   }

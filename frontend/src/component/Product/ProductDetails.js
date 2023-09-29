@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Carousel from "react-material-ui-carousel";
 import { useDispatch,useSelector } from 'react-redux'
-import { getSingleProductAdmin } from '../../actions/productAction'
+import { getSingleProductAdmin, reviewPostingAction } from '../../actions/productAction'
 import {useParams} from "react-router-dom"
  import "./ProductDetails.css";
 import Loader from '../layout/Loader/Loading';
@@ -18,12 +18,10 @@ const ProductDetails = () => {
    const [open, setOpen] = useState(false);
    const [rating, setRating] = useState(0);
    const [comment, setComment] = useState("");
- 
+  const {error,success}=useSelector((state)=>state.review);
     let {id}=useParams();
     const dispatch=useDispatch();
-    useEffect(() => {
-        dispatch(getSingleProductAdmin(id));
-      }, [dispatch,id]);
+   
       const {productDetails,loading}=useSelector(state=>state.productDetails);
       const options = {
         size: "large",
@@ -61,9 +59,22 @@ const ProductDetails = () => {
       const submitReviewToggle=()=>{
         open?setOpen(false):setOpen(true)
       }
-      const reviewSubmitHandler=()=>{
-        
+      const reviewSubmitHandler=(e)=>{
+        e.preventDefault();
+        const myForm =new FormData();
+        myForm.set("rating",rating);
+        myForm.set("comment",comment);
+        myForm.set("productId",id);
+        dispatch(reviewPostingAction(myForm));
+        setOpen(false);
       }
+      useEffect(() => {
+        if(error)
+        JSAlert.alert(error);
+        if(success)
+        JSAlert.alert("Review Successfully Posted")
+        dispatch(getSingleProductAdmin(id));
+      }, [dispatch,id,success,error]);
   return (
     <Fragment>
       {
@@ -125,7 +136,7 @@ const ProductDetails = () => {
                    <div className="detailsBlock-4">
                      Description : <p>{productDetails.description}</p>
                    </div>
-                   <button  className="submitReview">
+                   <button onClick={submitReviewToggle } className="submitReview">
                      Submit Review
                    </button>
      

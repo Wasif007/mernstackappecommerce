@@ -66,22 +66,27 @@ export const reviewPostingReducer = (state = {}, action) => {
   switch (action.type) {
     case REVIEW_PRODUCT_REQUEST:
       return {
-        loading: true,
         ...state,
+        loading: true,
+        
       };
     case REVIEW_SUCCESS:
       return {
+        ...state,
         loading: false,
-        productDetails: action.payload.productTFind,
+        success: action.payload,
       };
     case REVIEW_PRODUCT_FAIL:
       return {
+        ...state,
         loading: false,
         error: action.payload,
       };
       case REVIEW_PRODUCT_RESET:
         return{
-          
+          ...state,
+          loading:false,
+          success:false
         }
 
     case ALL_ERROR_CLEAR:
