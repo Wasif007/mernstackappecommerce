@@ -6,9 +6,10 @@ import {useParams} from "react-router-dom"
  import "./ProductDetails.css";
 import Loader from '../layout/Loader/Loading';
 import Review from '../layout/Review/review';
-import ReactStars from 'react-rating-stars-component'
 import MetaData from '../layout/MetaData';
 import { addtoCart } from '../../actions/cartActions';
+import { useNavigate } from 'react-router-dom';
+
 import JSAlert from 'js-alert'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating } from '@mui/material';
 
@@ -18,20 +19,17 @@ const ProductDetails = () => {
    const [open, setOpen] = useState(false);
    const [rating, setRating] = useState(0);
    const [comment, setComment] = useState("");
+   const navigate=useNavigate();
   const {error,success}=useSelector((state)=>state.review);
     let {id}=useParams();
     const dispatch=useDispatch();
-   
+   const {user}=useSelector(state=>state.user);
       const {productDetails,loading}=useSelector(state=>state.productDetails);
       const options = {
         size: "large",
         value: productDetails.ratings,
         readOnly: true,
-        precision: 0.5,
-        edit:false,
-        color:"rgba(20,20,20,0.1)",
-        activeColor:"tomato",
-        isHalf:true
+       
       };
       const increaseQuantity=()=>{
 
@@ -69,12 +67,15 @@ const ProductDetails = () => {
         setOpen(false);
       }
       useEffect(() => {
+        if(user===null){
+          navigate("/login");
+        }
         if(error)
         JSAlert.alert(error);
         if(success)
         JSAlert.alert("Review Successfully Posted")
         dispatch(getSingleProductAdmin(id));
-      }, [dispatch,id,success,error]);
+      }, [dispatch,id,success,error,user,navigate]);
   return (
     <Fragment>
       {
@@ -103,9 +104,10 @@ const ProductDetails = () => {
      
      
                    <div className="detailsBlock-2">
-                     <span className="detailsBlock-2-span">
                        {" "}
-                       <ReactStars {...options}/>
+                       <Rating {...options}/>
+                       <span className="detailsBlock-2-span">
+               
                        ({productDetails.numOfReviews} Reviews)
                      </span>
                    </div>

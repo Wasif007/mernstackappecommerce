@@ -15,7 +15,7 @@ export const orderPlaceReducer = (state = { orderInfo: {} }, action) => {
         };
       case  NEW_ORDER_FAIL:
         return {
-          loading: true,
+          loading: false,
           error: action.payload,
         };
   

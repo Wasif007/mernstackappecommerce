@@ -1,6 +1,6 @@
 import React from 'react'
 import profilePng from "../../../images/Profile.png"
-import ReactStars from "react-rating-stars-component"
+import { Rating } from '@mui/material';
 const Review = (props) => {
     const {review}=props;
     const options = {
@@ -14,7 +14,7 @@ const Review = (props) => {
     <div className="reviewCard">
       <img src={profilePng} alt="User" />
       <p>{review.name}</p>
-      <ReactStars {...options} />
+      <Rating {...options} />
       <span className="reviewCardComment">{review.comment}</span>
     </div> 
     
