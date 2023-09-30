@@ -1,5 +1,5 @@
 
-import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, REVIEW_PRODUCT_RESET} from "../constants/productConstant"
+import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, REVIEW_PRODUCT_RESET, ADMIN_PRODUCT_FAIL, ADMIN_PRODUCT_SUCCESS, ADMIN_PRODUCT_REQUEST} from "../constants/productConstant"
 
 //All products get reducer
 export const productReducer=(state={products:[]},action)=>{
@@ -13,11 +13,18 @@ switch (action.type) {
             count:action.payload.count,
         }
         case ALL_PRODUCT_FAIL:
+          case ADMIN_PRODUCT_FAIL:
         return{
             loading:false,
             error:action.payload
         }
+        case ADMIN_PRODUCT_SUCCESS:
+          return {
+            loading:false,
+            products:action.payload
+          }
         case ALL_PRODUCT_REQUEST:
+          case ADMIN_PRODUCT_REQUEST:
         return{
             loading:true,
             products:[]

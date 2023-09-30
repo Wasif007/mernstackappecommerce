@@ -30,6 +30,13 @@ exports.getAllProducts=middleWareForTC(async(req,res)=>{
 res.status(200).json({success:true,fetchAllProducts,numOfProducts,numberOfProducts,count});
 });
 
+//Route of all products for Admin made here
+exports.getAllForAdminProducts=middleWareForTC(async(req,res)=>{
+   const products=await productSchema.find();   
+res.status(200).json({success:true,products});
+});
+
+
 //Route of updating a product here --Admin
 exports.updatingAProduct=middleWareForTC(async(req,res,next)=>{
   

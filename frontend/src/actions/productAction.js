@@ -1,4 +1,4 @@
-import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL} from "../constants/productConstant"
+import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, ADMIN_PRODUCT_REQUEST, ADMIN_PRODUCT_SUCCESS} from "../constants/productConstant"
 import axios from "axios";
 
 // Get All Products For Admin
@@ -23,6 +23,24 @@ export const getAdminProduct = (keywordFromParam="",currentPage=1,price=[0,25000
       });
     }
   };
+
+  // Get All Products For Admin Panel
+export const getAllProductsForAdmin = () => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_PRODUCT_REQUEST });
+const { data } = await axios.get("/api/v1/admin/products");
+    dispatch({
+      type: ADMIN_PRODUCT_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 //Clearing all errors
 export const clearAllErrorFunc=()=>async(dispatch)=>{
 dispatch({
