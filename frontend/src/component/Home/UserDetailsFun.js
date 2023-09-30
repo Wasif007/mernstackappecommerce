@@ -42,7 +42,7 @@ function shoppingCart(){
   navigate("/cart");
 }
 function dashBoard(){
-  navigate("/dashboard");
+  navigate("/admin/dashboard");
 }
 
   return (

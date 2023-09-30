@@ -30,6 +30,7 @@ import Payment from "./component/Home/Cart/Payment.js";
 import OrderSuccessPla from './component/Home/Cart/OrderSuccessPla';
 import MyOrderDetails from "./component/Order/MyOrderDetails.js";
 import MySingleOrderDetails from "./component/Order/MySingleOrderDetails.js";
+import AdminDashboard from "./component/Dashboard/AdminDashboard.js"
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
 
 
@@ -103,6 +104,9 @@ store.dispatch(meUserDetails());
 
 <Route exact path="/orderdetails/:id" element={ <ProtectedRoute /> } >
     <Route exact path="/orderdetails/:id" element={ <MySingleOrderDetails /> } />
+</Route>
+<Route exact path="/admin/dashboard" element={ <ProtectedRoute /> } >
+    <Route exact path="/admin/dashboard" element={ <AdminDashboard /> } />
 </Route>
       </Routes>
 
