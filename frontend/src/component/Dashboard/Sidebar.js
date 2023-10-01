@@ -2,12 +2,8 @@ import React from "react";
 import "./sidebar.css";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
-import { TreeView } from '@mui/x-tree-view/TreeView';
-import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import AddIcon from '@mui/icons-material/Add';
-import ImportExportIcon from '@mui/icons-material/ImportExport';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
@@ -28,6 +24,13 @@ const Sidebar = () => {
         <p>
           <PostAddIcon />
           All Products
+        </p>
+      </Link>
+      
+      <Link to="/admin/new/product">
+        <p>
+          <AddIcon />
+          Create New Product
         </p>
       </Link>
       <Link to="/admin/orders">

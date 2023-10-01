@@ -1,5 +1,5 @@
 
-import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, REVIEW_PRODUCT_RESET, ADMIN_PRODUCT_FAIL, ADMIN_PRODUCT_SUCCESS, ADMIN_PRODUCT_REQUEST} from "../constants/productConstant"
+import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, REVIEW_PRODUCT_RESET, ADMIN_PRODUCT_FAIL, ADMIN_PRODUCT_SUCCESS, ADMIN_PRODUCT_REQUEST, ADMIN_PRODUCT_CREATE_REQUEST, ADMIN_PRODUCT_CREATE_SUCCESS, ADMIN_PRODUCT_CREATE_FAIL, ADMIN_PRODUCT_CREATE_RESET} from "../constants/productConstant"
 
 //All products get reducer
 export const productReducer=(state={products:[]},action)=>{
@@ -134,3 +134,42 @@ export const reviewPostingReducer = (state = {}, action) => {
       return state;
   }
 };
+
+  //Product Creating Admin reducer
+  export const productCreatingAdminReducer = (state = { productCreateAdmin: {} }, action) => {
+    switch (action.type) {
+      case ADMIN_PRODUCT_CREATE_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          
+        };
+      case ADMIN_PRODUCT_CREATE_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          product:action.payload,
+          success: action.payload,
+        };
+      case ADMIN_PRODUCT_CREATE_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
+        case ADMIN_PRODUCT_CREATE_RESET:
+          return{
+            ...state,
+            loading:false,
+            success:false
+          }
+  
+      case ALL_ERROR_CLEAR:
+        return {
+          ...state,
+          error: null,
+        };
+      default:
+        return state;
+    }
+  };

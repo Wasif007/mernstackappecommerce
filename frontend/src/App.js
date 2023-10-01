@@ -32,6 +32,7 @@ import MyOrderDetails from "./component/Order/MyOrderDetails.js";
 import MySingleOrderDetails from "./component/Order/MySingleOrderDetails.js";
 import AdminDashboard from "./component/Dashboard/AdminDashboard.js"
 import AdminAllProducts from "./component/Dashboard/AdminAllProducts.js"
+import AdminSingleProductCreate from "./component/Dashboard/AdminSingleProductCreate.js"
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
 
 
@@ -113,6 +114,9 @@ store.dispatch(meUserDetails());
     <Route exact path="/show/all/admin/products" element={ <AdminAllProducts /> } />
 </Route>
 
+<Route exact path="/admin/new/product" element={ <ProtectedRoute /> } >
+    <Route exact path="/admin/new/product" element={ <AdminSingleProductCreate /> } />
+</Route>
       </Routes>
 
       
