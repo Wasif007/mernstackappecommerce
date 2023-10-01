@@ -12,6 +12,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SideBar from "./Sidebar";
 import { Button } from "@mui/material";
+import { Typography} from "@mui/material";
+
 
 const AdminAllProducts = () => {
     const dispatch = useDispatch();
@@ -57,7 +59,7 @@ const AdminAllProducts = () => {
             return (
               <Fragment>
                 
-                <Link to={`/admin/product/${params.id}`}>
+                <Link to={`/show/admin/product/${params.id}`}>
                 <EditIcon />
         </Link>
                 <Button
