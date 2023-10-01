@@ -16,7 +16,7 @@ import { Button } from "@mui/material";
 const AdminAllProducts = () => {
     const dispatch = useDispatch();
   
-    const {  products } = useSelector((state) => state.products);
+    const {  products } = useSelector((state) => state.adminAllProducts);
     useEffect(() => {    
         dispatch(getAllProductsForAdmin());
       }, [dispatch]);

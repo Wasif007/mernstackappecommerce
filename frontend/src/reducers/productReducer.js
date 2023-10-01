@@ -40,6 +40,35 @@ error:null
 }
 
 };
+//All products get reducer for admin
+export const allProductReducer=(state={productsadmin:[]},action)=>{
+  switch (action.type) {
+            case ADMIN_PRODUCT_FAIL:
+          return{
+              loading:false,
+              error:action.payload
+          }
+          case ADMIN_PRODUCT_SUCCESS:
+            return {
+              loading:false,
+              products:action.payload
+            }
+            case ADMIN_PRODUCT_REQUEST:
+          return{
+              loading:true,
+              products:[]
+          }
+  
+          case ALL_ERROR_CLEAR:
+          return{
+  ...state,
+  error:null
+          }
+      default:
+          return state;
+  }
+  
+  };
 //Single product get reducer
 export const oneProductReducer = (state = { productDetails: {} }, action) => {
     switch (action.type) {

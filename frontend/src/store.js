@@ -1,7 +1,7 @@
 import {createStore,combineReducers,applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
-import { oneProductReducer, productReducer, reviewPostingReducer } from "./reducers/productReducer";
+import { allProductReducer, oneProductReducer, productReducer, reviewPostingReducer } from "./reducers/productReducer";
 import {loginReducer, passwordResetUserReducer, profileUpdateUserReducer} from "./reducers/userReducer"
 import { addToCartReducer } from "./reducers/cartReducer";
 import { myOrderReducer, orderPlaceReducer, singleOrderFrontReducer } from "./reducers/orderReducer";
@@ -17,6 +17,7 @@ const reduce=combineReducers({
     myOrder:myOrderReducer,
     order:singleOrderFrontReducer,
     review:reviewPostingReducer,
+    adminAllProducts:allProductReducer,
 });
 const initialState={
   cart: {

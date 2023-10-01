@@ -8,7 +8,7 @@ const router=express.Router();
 
 //Making all routes for product CRUD
 router.route("/admin/products").get(getAllProducts);
-router.route("/show/admin/products").get(isAuthenticatedUser,isRoleDefined("admin"),getAllForAdminProducts);
+router.route("/show/all/admin/products").get(isAuthenticatedUser,isRoleDefined("admin"),getAllForAdminProducts);
 router.route("/admin/new/product").post(isAuthenticatedUser,isRoleDefined("admin"),addingAProduct);
 router.route("/admin/product/:id").put(isAuthenticatedUser,isRoleDefined("admin"),updatingAProduct).delete(isAuthenticatedUser,isRoleDefined("admin"),deleteAProduct);
 router.route("/product/:id").get(findingASProduct)

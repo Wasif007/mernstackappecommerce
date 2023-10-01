@@ -28,7 +28,7 @@ export const getAdminProduct = (keywordFromParam="",currentPage=1,price=[0,25000
 export const getAllProductsForAdmin = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
-const { data } = await axios.get("/api/v1/show/admin/products");
+const { data } = await axios.get("/api/v1/show/all/admin/products");
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,
