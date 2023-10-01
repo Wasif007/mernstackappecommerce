@@ -109,8 +109,8 @@ store.dispatch(meUserDetails());
 <Route exact path="/admin/dashboard" element={ <ProtectedRoute /> } >
     <Route exact path="/admin/dashboard" element={ <AdminDashboard /> } />
 </Route>
-<Route exact path="/admin/products" element={ <ProtectedRoute /> } >
-    <Route exact path="/admin/products" element={ <AdminAllProducts /> } />
+<Route exact path="/show/admin/all/products" element={ <ProtectedRoute /> } >
+    <Route exact path="/show/admin/all/products" element={ <AdminAllProducts /> } />
 </Route>
 
       </Routes>
