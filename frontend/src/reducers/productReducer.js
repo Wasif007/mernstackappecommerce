@@ -148,8 +148,8 @@ export const reviewPostingReducer = (state = {}, action) => {
         return {
           ...state,
           loading: false,
-          product:action.payload,
-          success: action.payload,
+          product:action.payload.product,
+          success: action.payload.success,
         };
       case ADMIN_PRODUCT_CREATE_FAIL:
         return {

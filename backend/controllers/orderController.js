@@ -117,7 +117,6 @@ exports.deleteOrderFAdmin=middleWareForTC(async(req,res,next)=>{
 
     //Find an order of id provided
    const order= await orderSchema.findById(req.params.id);
-   console.log(order);
    if(!order){
     //If no order found
     return res.status(400).json({

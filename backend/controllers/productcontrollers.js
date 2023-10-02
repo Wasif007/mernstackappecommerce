@@ -1,5 +1,6 @@
 const errorHandlingClass = require("../Utils/errorHandling");
 const productSchema=require("../models/productModel");
+const cloudinary=require("cloudinary");
 //MiddleWare for try Catch for async
 const middleWareForTC=require("../middleware/asyncErrorHandling");
 const ApiFeatures = require("../Utils/apifilters");
@@ -8,9 +9,28 @@ const ApiFeatures = require("../Utils/apifilters");
 exports.addingAProduct=middleWareForTC(async(req,res)=>{
 //Adding a user Id of who is adding it
 req.body.userAdded=req.user.id;
+const images=[];
+if(typeof req.body.images==="string"){
+images.push(req.body.images);
+}else{
+images=req.body.images;
+}
+const imagesLink=[];
+for (let index = 0; index < images.length; index++) {
+    const result = await cloudinary.v2.uploader.upload(images[index], {
+        folder: "products",
+      });
+      imagesLink.push({
+        public_uid:result.public_id,
+        url: result.secure_url,
+    });
+    
+}
+req.body.images=imagesLink;
+
 //Passing all req.body to create new user
-const productCreatedViaReq=await productSchema.create(req.body);
-res.status(201).json({success:true,productCreatedViaReq});
+const product=await productSchema.create(req.body);
+res.status(201).json({success:true,product});
 }
 )
 
@@ -157,7 +177,6 @@ exports.deletingAReview=middleWareForTC(async(req,res,next)=>{
             message:"Product not found"
         })
     }
-    console.log(product.reviews);
     const reviews=product.reviews.filter((rev)=>rev._id.toString()!==req.query.id.toString());
     const numOfReviews=reviews.length;
     //Finding the avg for ratings of a product

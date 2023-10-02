@@ -233,7 +233,6 @@ exports.userProfileUpdate=middleWareForTC(async(req,res,next)=>{
             email:req.body.email
            }
            
-          console.log(req.body.avatar);
            if(req.body.avatar!==""){
             const user =await userSchema.findById(req.user.id);
           

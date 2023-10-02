@@ -12,7 +12,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SideBar from "./Sidebar";
 import { Button } from "@mui/material";
-import { Typography} from "@mui/material";
 
 
 const AdminAllProducts = () => {

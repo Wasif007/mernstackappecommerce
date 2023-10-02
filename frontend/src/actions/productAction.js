@@ -94,7 +94,7 @@ export const productCreatingAdminAction = (productData) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(`/api/v1/admin/new/product`,productData,config);
+    const { data } = await axios.post(`/api/v1/admin/new/product`,productData,config);
 
     dispatch({
       type: ADMIN_PRODUCT_CREATE_SUCCESS,
