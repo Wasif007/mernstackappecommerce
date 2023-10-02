@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./AdminSingleProductCreate.css";
 import { useSelector, useDispatch } from "react-redux";
-import {  productCreatingAdminAction } from "../../actions/productAction";
+import {clearAllErrorFunc,  productCreatingAdminAction } from "../../actions/productAction";
 import MetaData from "../layout/MetaData";
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -30,6 +30,7 @@ const AdminSingleProductCreate = () => {
     useEffect(() => {
         if (error) {
           JSAlert.alert(error);
+          dispatch(clearAllErrorFunc());
         }
     
         if (success) {
@@ -155,6 +156,7 @@ const AdminSingleProductCreate = () => {
               type="file"
               name="avatar"
               accept="image/*"
+              required
               onChange={createProductImagesChange}
               multiple
             />

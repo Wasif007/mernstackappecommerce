@@ -19,7 +19,7 @@ import EventIcon from '@mui/icons-material/Event';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import JSAlert from 'js-alert'
 import axios from "axios";
-import { newOrderCreationAction } from "../../../actions/orderAction";
+import { clearAllErrorFunc, newOrderCreationAction } from "../../../actions/orderAction";
 
 
 const Payment = () => {
@@ -75,6 +75,7 @@ const Payment = () => {
           payBtn.current.disabled = false;
   
           JSAlert.alert(result.error);
+          dispatch(clearAllErrorFunc());
         } 
         else {
           if (result.paymentIntent.status === "succeeded") {
