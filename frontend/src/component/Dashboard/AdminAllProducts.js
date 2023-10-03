@@ -49,7 +49,6 @@ const AdminAllProducts = () => {
   
     
     const deleteProductFunction=(id)=>{
-      console.log(id);
       dispatch(deleteSingleProductAdmin(id));
     }
     const columns = [

@@ -69,9 +69,7 @@ export const getSingleProductAdmin = (id) => async (dispatch) => {
 export const deleteSingleProductAdmin = (id) => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_DELETE_REQUEST });
-    console.log("id is" ,id);
     const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
-    console.log(data);
     dispatch({
       type: ADMIN_PRODUCT_DELETE_SUCCESS,
       payload: data,

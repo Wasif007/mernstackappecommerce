@@ -86,7 +86,12 @@ exports.deleteAProduct=middleWareForTC(async(req,res,next)=>{
     if(!productTBDeleted){
         return res.status(500).json({success:false,message:"Product not found to be deleted"});
     }
+
     else{
+      for (let i = 0; i < productTBDeleted.images.length; i++) {
+        await cloudinary.v2.uploader.destroy(productTBDeleted.images[i].public_uid);
+        
+      }
       await productSchema.findByIdAndDelete(req.params.id);
       res.status(200).json({success:true,message:"Product deleted Successfully"});
     }
