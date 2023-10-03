@@ -4,6 +4,7 @@ import "./AdminAllProducts.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   
+  deleteSingleProductAdmin,
   getAllProductsForAdmin,
 } from "../../actions/productAction";
 import { Link } from "react-router-dom";
@@ -12,16 +13,45 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SideBar from "./Sidebar";
 import { Button } from "@mui/material";
+import { ADMIN_PRODUCT_DELETE_RESET, ALL_ERROR_CLEAR } from "../../constants/productConstant";
+import { useNavigate } from 'react-router-dom';
+
+import JSAlert from 'js-alert'
 
 
 const AdminAllProducts = () => {
+
     const dispatch = useDispatch();
+    const navigate=useNavigate();
+    const {  error,products } = useSelector((state) => state.adminAllProducts);
+ const {message, error: deleteError, isDeleted } = useSelector(
+    (state) => state.adminProductDelete
+  );
+    useEffect(() => {
+      if (error) {
+        JSAlert.alert(error);
+        dispatch(ALL_ERROR_CLEAR());
+      }
   
-    const {  products } = useSelector((state) => state.adminAllProducts);
-    useEffect(() => {    
-        dispatch(getAllProductsForAdmin());
-      }, [dispatch]);
+      if (deleteError) {
+        JSAlert.alert(deleteError);
+        dispatch(ALL_ERROR_CLEAR());
+      }
+  
+      if (isDeleted) {
+        JSAlert.alert(message);
+        navigate("/admin/dashboard");
+        dispatch({ type: ADMIN_PRODUCT_DELETE_RESET });
+      }
+  
+      dispatch(getAllProductsForAdmin());
+    }, [dispatch, error, deleteError, navigate, isDeleted]);
+  
     
+    const deleteProductFunction=(id)=>{
+      console.log(id);
+      dispatch(deleteSingleProductAdmin(id));
+    }
     const columns = [
         { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },
     
@@ -61,7 +91,11 @@ const AdminAllProducts = () => {
                 <Link to={`/show/admin/product/${params.id}`}>
                 <EditIcon />
         </Link>
-                <Button
+                <Button 
+                onClick={() =>
+                  deleteProductFunction(params.id)
+                }
+              
                 >
                   <DeleteIcon />
                 </Button>

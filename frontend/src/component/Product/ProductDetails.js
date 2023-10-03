@@ -67,9 +67,7 @@ const ProductDetails = () => {
         setOpen(false);
       }
       useEffect(() => {
-        if(user===null){
-          navigate("/login");
-        }
+        
         if(error)
         JSAlert.alert(error);
         if(success)
