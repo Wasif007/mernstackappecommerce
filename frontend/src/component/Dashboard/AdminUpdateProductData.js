@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./AdminSingleProductCreate.css";
 import { useSelector, useDispatch } from "react-redux";
-import {clearAllErrorFunc,  productCreatingAdminAction } from "../../actions/productAction";
+import {clearAllErrorFunc,  getSingleProductAdmin, updateSingleProductAdmin } from "../../actions/productAction";
 import MetaData from "../layout/MetaData";
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -9,17 +9,19 @@ import StorageIcon from '@mui/icons-material/Storage';
 import SpellcheckIcon from '@mui/icons-material/Spellcheck';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SideBar from "./Sidebar";
-import { ADMIN_PRODUCT_CREATE_RESET } from "../../constants/productConstant";
-import { useNavigate } from 'react-router-dom';
+import { ADMIN_PRODUCT_UPDATE_RESET } from "../../constants/productConstant";
+import { useNavigate, useParams } from 'react-router-dom';
 
 import JSAlert from 'js-alert'
 
 import { Button } from "@mui/material";
-const AdminSingleProductCreate = () => {
+const AdminUpdateProductData = () => {
+    let {id}=useParams();
+    
     const dispatch = useDispatch();
     const navigate=useNavigate();
-    const { loading, error, success } = useSelector((state) => state.adminSingleProductCreation);
-  
+    const { loading, error, success,productDetails} = useSelector((state) => state.productDetails);
+    const {isUpdated}=useSelector((state)=>state.productUpdate);
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("");
@@ -27,18 +29,31 @@ const AdminSingleProductCreate = () => {
     const [Stock, setStock] = useState(0);
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
+    const [oldImage,setOldImage]=useState([]);
     useEffect(() => {
+      
+        if(productDetails && productDetails._id!==id){
+            dispatch(getSingleProductAdmin(id));
+        }
+        else{
+            setName(productDetails.name);
+      setDescription(productDetails.description);
+      setPrice(productDetails.price);
+      setCategory(productDetails.category);
+      setStock(productDetails.Stock);
+      setOldImage(productDetails.images);
+        }
         if (error) {
           JSAlert.alert(error);
           dispatch(clearAllErrorFunc());
         }
     
-        if (success) {
-          JSAlert.alert("Product Created Successfully");
-          navigate("/admin/dashboard");
-          dispatch({ type: ADMIN_PRODUCT_CREATE_RESET });
+        if (isUpdated) {
+          JSAlert.alert("Product Updated Successfully");
+          navigate("/show/all/admin/products");
+          dispatch({ type: ADMIN_PRODUCT_UPDATE_RESET });
         }
-      }, [dispatch, error, navigate, success]);
+      }, [dispatch, error, navigate, success,isUpdated,id,productDetails]);
     
     const categories = [
         "Laptop",
@@ -49,12 +64,12 @@ const AdminSingleProductCreate = () => {
         "Camera",
         "SmartPhones",
       ];
-      const createProductImagesChange = (e) => {
+      const updateProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
     
         setImages([]);
         setImagesPreview([]);
-    
+        setOldImage([]);
         files.forEach((file) => {
           const reader = new FileReader();
     
@@ -68,7 +83,7 @@ const AdminSingleProductCreate = () => {
           reader.readAsDataURL(file);
         });
       };
-      const createProductSubmitHandler = (e) => {
+      const updateProductSubmitHandler = (e) => {
         e.preventDefault();
     
         const myForm = new FormData();
@@ -82,7 +97,8 @@ const AdminSingleProductCreate = () => {
         images.forEach((image) => {
           myForm.append("images", image);
         });
-        dispatch(productCreatingAdminAction(myForm));
+        console.log(id,name,price,description,category,Stock,images)
+        dispatch(updateSingleProductAdmin(id,myForm));
       };
   return (
     <Fragment>
@@ -93,7 +109,7 @@ const AdminSingleProductCreate = () => {
         <form
           className="createProductForm"
           encType="multipart/form-data"
-          onSubmit={createProductSubmitHandler}
+          onSubmit={updateProductSubmitHandler}
         >
           <h1>Create Product</h1>
 
@@ -113,6 +129,7 @@ const AdminSingleProductCreate = () => {
               type="number"
               placeholder="Price"
               required
+              value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
@@ -131,8 +148,9 @@ const AdminSingleProductCreate = () => {
 
           <div>
             <AccountTreeIcon />
-            <select onChange={(e) => setCategory(e.target.value)}>
+            <select onChange={(e) => setCategory(e.target.value)} value={category}>
               <option value="">Choose Category</option>
+              
               {categories.map((cate) => (
                 <option key={cate} value={cate}>
                   {cate}
@@ -147,6 +165,7 @@ const AdminSingleProductCreate = () => {
               type="number"
               placeholder="Stock"
               required
+              value={Stock}
               onChange={(e) => setStock(e.target.value)}
             />
           </div>
@@ -157,11 +176,17 @@ const AdminSingleProductCreate = () => {
               name="avatar"
               accept="image/*"
               required
-              onChange={createProductImagesChange}
+              onChange={updateProductImagesChange}
               multiple
             />
           </div>
-          
+          <div id="createProductFormImage">
+            {oldImage.map((image, index) => (
+              <img key={index} src={image.url} alt="Old Product Preview" />
+            ))}
+          </div>
+
+
           <div id="createProductFormImage">
             {imagesPreview.map((image, index) => (
               <img key={index} src={image} alt="Product Preview" />
@@ -182,4 +207,4 @@ const AdminSingleProductCreate = () => {
   )
 }
 
-export default AdminSingleProductCreate
+export default AdminUpdateProductData

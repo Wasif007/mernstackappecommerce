@@ -27,7 +27,7 @@ const Sidebar = () => {
         </p>
       </Link>
       
-      <Link to="/admin/new/product">
+      <Link to="/show/admin/product">
         <p>
           <AddIcon />
           Create New Product

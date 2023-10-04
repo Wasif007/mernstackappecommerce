@@ -59,25 +59,61 @@ res.status(200).json({success:true,products});
 
 //Route of updating a product here --Admin
 exports.updatingAProduct=middleWareForTC(async(req,res,next)=>{
-  
-         //Finding a product through id given in url
-    let productFinding=await productSchema.findById(req.params.id);
-     if(!productFinding){
-        return res.status(404).json({
-            success:false,
-            message:"Product not found"
-        })
-        }
-   
-   
-   else{
-    //If Id is found than update it with request body values
-    productFinding=await productSchema.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true,useFindAndModify:false});
-    res.status(200).json({
-        success:true,
-        productFinding
-    })
-}
+  try {
+      //Finding a product through id given in url
+      let productFinding=await productSchema.findById(req.params.id);
+      if(!productFinding){
+         return res.status(404).json({
+             success:false,
+             message:"Product not found"
+         })
+         }
+    
+    
+    else{
+     // Images Start Here
+   let images = [];
+ 
+   if (typeof req.body.images === "string") {
+     images.push(req.body.images);
+   } else {
+     images = req.body.images;
+   }
+ 
+   if (images !== undefined) {
+     // Deleting Images From Cloudinary
+     for (let i = 0; i < productFinding.images.length; i++) {
+       await cloudinary.v2.uploader.destroy(productFinding.images[i].public_uid);
+     }
+ 
+     const imagesLinks = [];
+ 
+     for (let i = 0; i < images.length; i++) {
+       const result = await cloudinary.v2.uploader.upload(images[i], {
+         folder: "products",
+       });
+ 
+       imagesLinks.push({
+         public_uid: result.public_id,
+         url: result.secure_url,
+       });
+     }
+ 
+     req.body.images = imagesLinks;
+   }
+     //If Id is found than update it with request body values
+     productFinding=await productSchema.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true,useFindAndModify:false});
+     res.status(200).json({
+         success:true,
+         message:"Product Updated Successfully",
+         productFinding
+     })
+ }
+  } catch (error) {
+    console.log(error);
+  }
+
+       
 });
 
 //Route for deleting a Product

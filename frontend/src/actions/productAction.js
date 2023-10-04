@@ -1,4 +1,4 @@
-import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, ADMIN_PRODUCT_REQUEST, ADMIN_PRODUCT_SUCCESS, ADMIN_PRODUCT_CREATE_REQUEST, ADMIN_PRODUCT_CREATE_SUCCESS, ADMIN_PRODUCT_CREATE_FAIL, ADMIN_PRODUCT_DELETE_REQUEST, ADMIN_PRODUCT_DELETE_SUCCESS, ADMIN_PRODUCT_DELETE_FAIL} from "../constants/productConstant"
+import {ALL_ERROR_CLEAR,ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAIL, ONE_PRODUCT_REQUEST, ONE_PRODUCT_SUCCESS, ONE_PRODUCT_FAIL, REVIEW_PRODUCT_REQUEST, REVIEW_SUCCESS, REVIEW_PRODUCT_FAIL, ADMIN_PRODUCT_REQUEST, ADMIN_PRODUCT_SUCCESS, ADMIN_PRODUCT_CREATE_REQUEST, ADMIN_PRODUCT_CREATE_SUCCESS, ADMIN_PRODUCT_CREATE_FAIL, ADMIN_PRODUCT_DELETE_REQUEST, ADMIN_PRODUCT_DELETE_SUCCESS, ADMIN_PRODUCT_DELETE_FAIL, ADMIN_PRODUCT_UPDATE_REQUEST, ADMIN_PRODUCT_UPDATE_SUCCESS, ADMIN_PRODUCT_UPDATE_FAIL} from "../constants/productConstant"
 import axios from "axios";
 
 // Get All Products For Admin
@@ -77,6 +77,24 @@ export const deleteSingleProductAdmin = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADMIN_PRODUCT_DELETE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Updating a Single Product details Admin
+export const updateSingleProductAdmin = (id,productData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_PRODUCT_UPDATE_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.put(`/api/v1/admin/product/${id}`,productData,config);
+    dispatch({
+      type: ADMIN_PRODUCT_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCT_UPDATE_FAIL,
       payload: error.response.data.message,
     });
   }

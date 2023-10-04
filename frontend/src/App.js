@@ -1,14 +1,14 @@
 
 import { Fragment, useEffect } from 'react';
 import './App.css';
-import Header from "./component/layout/Header/header.js"
+import Header from "./component/layout/Header/header"
 import {BrowserRouter as Router,Route,Routes} from "react-router-dom"
 import WebFont from "webfontloader";
 import Footer from "./component/layout/Footer/footer"
 import Home from './component/Home/Home';
-import ProductDetails from"./component/Product/ProductDetails.js"
-import Products from './component/Products/Products.js';
-import Search from "./component/Products/Search.js"
+import ProductDetails from"./component/Product/ProductDetails"
+import Products from './component/Products/Products';
+import Search from "./component/Products/Search"
 import LoginSignUpM from './component/User/LoginSignUpM';
 import store from "./store";
 import { meUserDetails } from './actions/userAction';
@@ -26,13 +26,14 @@ import PasswordResetEmail from './component/User/PasswordResetEmail';
 import Cart from './component/Home/Cart/Cart';
 import Shipping from './component/Home/Cart/Shipping';
 import OrderConfirmSecond from "./component/Home/Cart/OrderConfirmSecond";
-import Payment from "./component/Home/Cart/Payment.js";
+import Payment from "./component/Home/Cart/Payment";
 import OrderSuccessPla from './component/Home/Cart/OrderSuccessPla';
-import MyOrderDetails from "./component/Order/MyOrderDetails.js";
-import MySingleOrderDetails from "./component/Order/MySingleOrderDetails.js";
-import AdminDashboard from "./component/Dashboard/AdminDashboard.js"
-import AdminAllProducts from "./component/Dashboard/AdminAllProducts.js"
-import AdminSingleProductCreate from "./component/Dashboard/AdminSingleProductCreate.js"
+import MyOrderDetails from "./component/Order/MyOrderDetails";
+import MySingleOrderDetails from "./component/Order/MySingleOrderDetails";
+import AdminDashboard from "./component/Dashboard/AdminDashboard"
+import AdminAllProducts from "./component/Dashboard/AdminAllProducts"
+import AdminSingleProductCreate from "./component/Dashboard/AdminSingleProductCreate"
+import AdminUpdateProductData from "./component/Dashboard/AdminUpdateProductData"
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
 
 
@@ -116,6 +117,9 @@ store.dispatch(meUserDetails());
 
 <Route exact path="/admin/new/product" element={ <ProtectedRoute /> } >
     <Route exact path="/admin/new/product" element={ <AdminSingleProductCreate /> } />
+</Route>
+<Route exact path="/show/admin/product/:id" element={ <ProtectedRoute /> } >
+    <Route exact path="/show/admin/product/:id" element={ <AdminUpdateProductData /> } />
 </Route>
       </Routes>
 
