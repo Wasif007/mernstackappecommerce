@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_ERROR_CLEAR, MY_ORDER_FAIL, MY_ORDER_REQUEST, MY_ORDER_SUCCESS, NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS, SINGLE_ORDER_FAIL, SINGLE_ORDER_REQUEST, SINGLE_ORDER_SUCCESS } from "../constants/orderConstant";
+import { ADMIN_ORDER_CREATE_FAIL, ADMIN_ORDER_CREATE_REQUEST, ADMIN_ORDER_CREATE_SUCCESS, ADMIN_ORDER_DELETE_FAIL, ADMIN_ORDER_DELETE_REQUEST, ADMIN_ORDER_DELETE_SUCCESS, ADMIN_ORDER_FAIL, ADMIN_ORDER_REQUEST, ADMIN_ORDER_SUCCESS, ADMIN_ORDER_UPDATE_FAIL, ADMIN_ORDER_UPDATE_REQUEST, ADMIN_ORDER_UPDATE_SUCCESS, ALL_ERROR_CLEAR, MY_ORDER_FAIL, MY_ORDER_REQUEST, MY_ORDER_SUCCESS, NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS, SINGLE_ORDER_FAIL, SINGLE_ORDER_REQUEST, SINGLE_ORDER_SUCCESS } from "../constants/orderConstant";
 
   //Posting a order Action
   export const newOrderCreationAction = (order) => async (dispatch) => {
@@ -52,6 +52,57 @@ import { ALL_ERROR_CLEAR, MY_ORDER_FAIL, MY_ORDER_REQUEST, MY_ORDER_SUCCESS, NEW
     }
   };
 
+  //Delete Single Order details Admin
+export const deleteSingleOrderAdmin = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_ORDER_DELETE_REQUEST });
+    const { data } = await axios.delete(`/api/v1/order/status/${id}`);
+    dispatch({
+      type: ADMIN_ORDER_DELETE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ORDER_DELETE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Updating a Order details Admin
+export const updateSingleOrderAdmin = (id,orderData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_ORDER_UPDATE_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.put(`/api/v1/order/status/${id}`,orderData,config);
+    dispatch({
+      type: ADMIN_ORDER_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ORDER_UPDATE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+  // Get All Orders For Admin Panel
+  export const getAllOrdersForAdmin = () => async (dispatch) => {
+    try {
+      dispatch({ type: ADMIN_ORDER_REQUEST });
+  const { data } = await axios.get("/api/v1/orderforadmin");
+  console.log("HELLO",data);
+      dispatch({
+        type: ADMIN_ORDER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_ORDER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
   //Clearing all errors
 export const clearAllErrorFunc=()=>async(dispatch)=>{
     dispatch({

@@ -4,7 +4,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import { allProductReducer, oneProductReducer, productCreatingAdminReducer, productDeletingAdminReducer, productReducer, productUpdatingAdminReducer, reviewPostingReducer } from "./reducers/productReducer";
 import {loginReducer, passwordResetUserReducer, profileUpdateUserReducer} from "./reducers/userReducer"
 import { addToCartReducer } from "./reducers/cartReducer";
-import { myOrderReducer, orderPlaceReducer, singleOrderFrontReducer } from "./reducers/orderReducer";
+import { allOrderReducer, myOrderReducer, orderDeletingAdminReducer, orderPlaceReducer, singleOrderFrontReducer } from "./reducers/orderReducer";
 
 const reduce=combineReducers({
     product:productReducer,
@@ -18,8 +18,10 @@ const reduce=combineReducers({
     order:singleOrderFrontReducer,
     review:reviewPostingReducer,
     adminAllProducts:allProductReducer,
+    adminAllOrders:allOrderReducer,
     adminSingleProductCreation:productCreatingAdminReducer,
     adminProductDelete:productDeletingAdminReducer,
+    adminOrderDelete:orderDeletingAdminReducer,
     productUpdate:productUpdatingAdminReducer,
 });
 const initialState={

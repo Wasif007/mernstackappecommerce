@@ -34,6 +34,7 @@ import AdminDashboard from "./component/Dashboard/AdminDashboard"
 import AdminAllProducts from "./component/Dashboard/AdminAllProducts"
 import AdminSingleProductCreate from "./component/Dashboard/AdminSingleProductCreate"
 import AdminUpdateProductData from "./component/Dashboard/AdminUpdateProductData"
+import AdminAllOrders from './component/Dashboard/AdminAllOrders';
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
 
 
@@ -121,6 +122,10 @@ store.dispatch(meUserDetails());
 <Route exact path="/show/admin/product/:id" element={ <ProtectedRoute /> } >
     <Route exact path="/show/admin/product/:id" element={ <AdminUpdateProductData /> } />
 </Route>
+<Route exact path="/admin/orders" element={ <ProtectedRoute /> } >
+    <Route exact path="/admin/orders" element={ <AdminAllOrders /> } />
+</Route>
+
       </Routes>
 
       
