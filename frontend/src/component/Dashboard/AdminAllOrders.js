@@ -50,9 +50,8 @@ const AdminAllOrders = () => {
       navigate("/admin/orders");
       dispatch({ type: ADMIN_ORDER_DELETE_RESET });
     }
-console.log("Hello1");
     dispatch(getAllOrdersForAdmin());
-    console.log("Hello2");  
+   
 }, [dispatch, error, deleteError, navigate, isDeleted]);
 
   const columns = [

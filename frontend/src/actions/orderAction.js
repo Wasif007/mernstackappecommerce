@@ -91,7 +91,6 @@ export const updateSingleOrderAdmin = (id,orderData) => async (dispatch) => {
     try {
       dispatch({ type: ADMIN_ORDER_REQUEST });
   const { data } = await axios.get("/api/v1/orderforadmin");
-  console.log("HELLO",data);
       dispatch({
         type: ADMIN_ORDER_SUCCESS,
         payload: data,
