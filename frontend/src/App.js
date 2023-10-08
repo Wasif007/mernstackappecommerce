@@ -37,6 +37,7 @@ import AdminUpdateProductData from "./component/Dashboard/AdminUpdateProductData
 import AdminAllOrders from './component/Dashboard/AdminAllOrders';
 import AdminUpdateOrderData from "./component/Dashboard/AdminUpdateOrderData"
 import AdminUserList from "./component/Dashboard/AdminUserList"
+import AdminUserUpdate from "./component/Dashboard/AdminUserUpdate.js"
 const stripeApiKey="pk_test_51Nv1D2AtWWs18icLllt131w4gMuORKYB4uP19aHQqOhwg2KVagSQtNsocH45XRKCmC7rVRRXq2GB5YOriFrzKxgy00LTseLSYN";
 
 
@@ -132,6 +133,9 @@ store.dispatch(meUserDetails());
 </Route>
 <Route exact path="/admin/allusers" element={ <ProtectedRoute /> } >
     <Route exact path="/admin/allusers" element={ <AdminUserList /> } />
+</Route>
+<Route exact path="/admin/user/:id" element={ <ProtectedRoute /> } >
+    <Route exact path="/admin/user/:id" element={ <AdminUserUpdate /> } />
 </Route>
 
       </Routes>

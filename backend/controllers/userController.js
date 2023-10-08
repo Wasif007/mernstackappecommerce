@@ -327,17 +327,25 @@ exports.userRoleDetail=middleWareForTC(async(req,res,next)=>{
  //Deleting a user with admin permission
  exports.userDetailDeleFAdmin=middleWareForTC(async(req,res,next)=>{
 
-       const findingUser=await userSchema.findById(req.params.id)
-       if(!findingUser){
-        return res.status(400).json({
-            success:false,
-            message:`No User with Id:${req.params.id} Found`
-        })
-       }
-      await findingUser.deleteOne({id:req.params.id});
+      try {
+        const findingUser=await userSchema.findById(req.params.id)
+        if(!findingUser){
+         return res.status(400).json({
+             success:false,
+             message:`No User with Id:${req.params.id} Found`
+         })
+        }
+        const imageId = findingUser.avatar.public_id;
  
-     res.status(200).json({
-         success:true,
-         message:`Deleted User with Id: ${req.params.id}`
-     })
+        await cloudinary.v2.uploader.destroy(imageId);
+ 
+       await findingUser.deleteOne({id:req.params.id});
+  
+      res.status(200).json({
+          success:true,
+          message:`Deleted User with Id: ${req.params.id}`
+      })
+      } catch (error) {
+        console.log(error);
+      }
  });
