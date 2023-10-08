@@ -45,7 +45,7 @@ const AdminAllProducts = () => {
       }
   
       dispatch(getAllProductsForAdmin());
-    }, [dispatch, error, deleteError, navigate, isDeleted]);
+    }, [dispatch, error, message,deleteError, navigate, isDeleted]);
   
     
     const deleteProductFunction=(id)=>{

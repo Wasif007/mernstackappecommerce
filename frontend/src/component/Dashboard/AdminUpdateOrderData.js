@@ -15,7 +15,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 import { ADMIN_ORDER_UPDATE_RESET} from "../../constants/orderConstant";
 import "./AdminUpdateOrderData.css";
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 
 
 const AdminUpdateOrderData = () => {

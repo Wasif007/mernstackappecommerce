@@ -27,7 +27,7 @@ const AdminAllOrders = () => {
   const {  error,orders } = useSelector((state) => state.adminAllOrders);
 
   
-  const {message, error: deleteError, isDeleted } = useSelector(
+  const {error: deleteError, isDeleted } = useSelector(
      (state) => state.adminOrderDelete
    );
   const deleteOrderHandler = (id) => {
