@@ -63,7 +63,6 @@ export const myOrderReducer = (state = { orders: [] }, action) => {
 export const orderDeletingAdminReducer = (state = { orderDelete: {} }, action) => {
   switch (action.type) {
     case ADMIN_ORDER_DELETE_REQUEST:
-      case ADMIN_ORDER_UPDATE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -75,15 +74,8 @@ export const orderDeletingAdminReducer = (state = { orderDelete: {} }, action) =
         isDeleted:action.payload.success,
         message:action.payload.message
       };
-      case ADMIN_ORDER_UPDATE_SUCCESS:
-        return{
-          ...state,
-          loading:false,
-          isUpdated:action.payload.success,
-          message:action.payload.message
-        }
+      
     case ADMIN_ORDER_DELETE_FAIL:
-      case ADMIN_ORDER_UPDATE_FAIL:
       return {
         ...state,
         loading: false,
@@ -96,12 +88,7 @@ export const orderDeletingAdminReducer = (state = { orderDelete: {} }, action) =
           loading:false,
           isDeleted:false
         }
-      case ADMIN_ORDER_UPDATE_RESET:
-        return {
-          ...state,
-          loading:false,
-          isUpdated:false
-        }
+      
     case ALL_ERROR_CLEAR:
       return {
         ...state,

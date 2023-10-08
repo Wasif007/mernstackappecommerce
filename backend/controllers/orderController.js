@@ -88,10 +88,14 @@ exports.gettingAllOrdersAdmin=middleWareForTC(async(req,res,next)=>{
                     message:"Order has been already Delivered"
                 })
         }
-        //Loop through orderItems details and update stock of products
-        order.orderItems.forEach(async (order)=>{
+        if(req.body.status==="Shipped"){
+             //Loop through orderItems details and update stock of products
+ order.orderItems.forEach(async (order)=>{
             await updateStockFunc(order.product,order.quantity)
         });
+        }
+       
+       
         //Update order status acc to sent in req.body
         order.orderStatus=req.body.status;
         if(req.body.status==="Delivered"){
