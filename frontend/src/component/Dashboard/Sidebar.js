@@ -39,7 +39,7 @@ const Sidebar = () => {
           Orders
         </p>
       </Link>
-      <Link to="/admin/users">
+      <Link to="/admin/allusers">
         <p>
           <PeopleIcon /> Users
         </p>

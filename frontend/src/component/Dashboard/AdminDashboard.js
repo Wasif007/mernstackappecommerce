@@ -10,17 +10,19 @@ import {
 import "./AdminDashboard.css"
 import { Typography} from "@mui/material";
 import { getAllOrdersForAdmin } from "../../actions/orderAction.js";
+import { getAllUsers } from "../../actions/userAction.js";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   
     const {  products } = useSelector((state) => state.adminAllProducts);
     const { orders } = useSelector((state) => state.adminAllOrders);
-  
+    const {users} =useSelector((state)=>state.allUsers);
 
   useEffect(() => {
     dispatch(getAllProductsForAdmin());
     dispatch(getAllOrdersForAdmin());
+    dispatch(getAllUsers);
     }, [dispatch]);
     
   return (
@@ -47,9 +49,9 @@ const AdminDashboard = () => {
               <p>Orders</p>
               <p>{orders && orders.length}</p>
             </Link>
-            <Link to="/admin/users">
+            <Link to="/admin/allusers">
               <p>Users</p>
-              <p>2</p>
+              <p>{users && users.length}</p>
             </Link>
           </div>
         </div>
